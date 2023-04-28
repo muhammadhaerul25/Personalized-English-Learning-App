@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Learning</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_learning.css') }}">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" integrity="sha512-DxmWezbsv4nd1B4n4sgZ8Wn9e9v8tdjKbMvEZPmEtnyyJuyBU8jC91XmGZf4PO4L4J4tynsI1KvOusOzdJ3qoA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    
+  </head>
+  <body>
+
+    <main>
+      <div id="chatbot">
+
+        <div class="tabs">
+          <button class="tablink active" onclick="openTab(event, 'pronunciation')" data-mode="pronunciation">Pronunciation, Speaking, and Conversation</button>
+          <button class="tablink" onclick="openTab(event, 'context')" data-mode="context">Context, Vocabulary, and Grammar</button>
+          <button class="tablink" onclick="openTab(event, 'reading')" data-mode="reading">Reading and Writing</button>
+        </div>
+        
+        <div class="conversation-container">
+          <div class="conversation active" id="pronunciation">
+            <div class="message bot">Welcome to Pronunciation, Speaking, and Conversation mode!<br>How can I assist you today?</div>
+          </div>
+          <div class="conversation" id="context">
+            <div class="message bot">Welcome to Context, Vocabulary, and Grammar mode!<br>How can I assist you today?</div>
+          </div>
+          <div class="conversation" id="reading">
+            <div class="message bot">Welcome to Reading and Writing mode!<br>How can I assist you today?</div>
+          </div>
+          <div class="loader-container"></div>
+    
+          <form id="user-form">
+            <div id="user-input-container">
+              <div class="message-options">
+                <select id="message-options-dropdown">
+                  <option value="">Select a prompt</option>
+                  <option value="pronunciation-option-1">Pronunciation option 1</option>
+                  <option value="pronunciation-option-2">Pronunciation option 2</option>
+                  <option value="pronunciation-option-3">Pronunciation option 3</option>
+                </select>
+              </div>
+              <textarea name="user_input" id="user-input" placeholder="Type your message here..."></textarea>
+              <input type="hidden" name="mode" id="mode" value="pronunciation">              
+            </div>
+            <button type="submit">Send</button>
+          </form>
+          
+    
+          <button id="exit-button" class="exit-button">Exit</button>
+          <div id="alert-dialog" class="hide">
+            <div id="alert-message">Are you sure you want to end learning?</div>
+            <div id="alert-buttons">
+              <button id="alert-ok">End Learning</button>
+              <button id="alert-cancel">Cancel</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </main>
+    
+
+    <script src="{{ url_for('static', filename='script_learning.js') }}"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js" integrity="sha512-YCcUz7VesYGql6ZL7VJ9Llr+5Kj/xYlY40U6wL0JnzrjV0aa1lhBb1LGZ9glDh5PjPNYdY24J8k7xDbAnzZX1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </body>
+</html>

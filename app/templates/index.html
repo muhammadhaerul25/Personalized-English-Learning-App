@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Personalized English Learning</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+</head>
+<body>
+	<header>
+		<h1>Personalized English Learning</h1>
+	</header>
+	<div class="container">
+		<div class="card">
+			<h2>Learning</h2>
+			<p>Welcome to Personalized English Learning. We offer a variety of tools and resources to help you improve your English skills.</p>
+			<a href="learning" class="button">Start Learning</a>
+		</div>
+		<div class="card-container">
+			<div class="card">
+				<h2>Placement Test</h2>
+				<p>Determine your current English level with our online placement test.</p>
+				<a href="placement-test">Take Test</a>
+			</div>
+			<div class="card">
+				<h2>Study Plan</h2>
+				<p>Create a personalized study plan based on your English level and goals.</p>
+				<a href="#">Create Plan</a>
+			</div>
+			<div class="card">
+				<h2>Recommendation</h2>
+				<p>Get recommendations for improvement.</p>
+				<a href="#">Get Recommendation</a>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<p>Copyright © 2023 Personalized English Learning.
+		  All rights reserved.</p>
+	  </footer>
+    
+	
+	<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
