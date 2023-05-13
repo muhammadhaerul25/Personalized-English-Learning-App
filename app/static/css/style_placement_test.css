@@ -1,0 +1,134 @@
+  * {
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  body {
+      margin: 0;
+      padding: 0;
+      font-size: 16px;
+      line-height: 1.5;
+      color: black;
+      background-color: #fff;
+  }
+
+    
+  main {
+    padding: 50px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+.container {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 0 auto;
+    max-width: 1000px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+}
+  
+
+.test-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+  min-height: 400px;  
+  background-image: url("/static/img/bg_blur.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: 100% 100%;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  .container {
+    max-width: 90%;
+  }
+}
+
+
+
+#submit-button {
+  border: none;
+  outline: none;
+  color: #fff;
+  border-radius: 0 0 10px 0;
+  transition: background-color 0.3s ease;
+  background-color: #74AA9C;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#submit-button:hover {
+  background-color: #0e4135;
+}
+
+.hide {
+  display: none;
+}
+
+
+#alert-dialog {
+  width: 220px;
+  height: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1;
+}
+
+#alert-message {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#alert-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+#alert-ok {
+  background-color: #e63946;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 15px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+#alert-cancel {
+  background-color: #c7c6c6;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: auto;
+  font-size: 12px;
+}
+
+#alert-buttons button:hover {
+  filter: brightness(70%);
+}
+

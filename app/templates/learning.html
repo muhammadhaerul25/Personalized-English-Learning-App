@@ -4,12 +4,9 @@
     <title>Learning</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style_learning.css') }}">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" integrity="sha512-DxmWezbsv4nd1B4n4sgZ8Wn9e9v8tdjKbMvEZPmEtnyyJuyBU8jC91XmGZf4PO4L4J4tynsI1KvOusOzdJ3qoA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_learning.css') }}">
   </head>
+  
   <body>
 
     <main>
@@ -38,9 +35,15 @@
               <div class="message-options">
                 <select id="message-options-dropdown">
                   <option value="">Select a prompt</option>
-                  <option value="pronunciation-option-1">Pronunciation option 1</option>
-                  <option value="pronunciation-option-2">Pronunciation option 2</option>
-                  <option value="pronunciation-option-3">Pronunciation option 3</option>
+                  <option value="Explain who are you and what can you do?">Explain who are you and what can you do?</option>
+                  <option value="Let's have a conversation about ...">Let's have a conversation about ...</option>
+                  <option value="Let's have a conversation about ... and suggest different vocabularies">Let's have a conversation about ... and suggest different vocabularies</option>
+                  <option value="Let's have a conversation about ... and correct my mistakes">Let's have a conversation about ... and correct my mistakes</option>
+                  <option value="Write a conversation about ...">Write a conversation about ...</option>
+                  <option value="Write a conversation between ...">Write a conversation between ...</option>
+                  <option value="Let's simulate a interview for">Let's simulate an interview for</option>
+                  <option value="Give me a training">Give me a training</option>
+                  <option value="Give me feedbacks">Give me feedbacks</option>
                 </select>
               </div>
               <textarea name="user_input" id="user-input" placeholder="Type your message here..."></textarea>
@@ -64,8 +67,7 @@
     </main>
     
 
-    <script src="{{ url_for('static', filename='script_learning.js') }}"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js" integrity="sha512-YCcUz7VesYGql6ZL7VJ9Llr+5Kj/xYlY40U6wL0JnzrjV0aa1lhBb1LGZ9glDh5PjPNYdY24J8k7xDbAnzZX1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ url_for('static', filename='js/script_learning.js') }}"></script>
+  
   </body>
 </html>
