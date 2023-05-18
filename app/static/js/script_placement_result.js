@@ -37,15 +37,6 @@ function getData() {
         bubble.appendChild(bubbleText);
         questionContainer.appendChild(bubble);
 
-        // questions.forEach((question, index) => {
-        //   const bubble = document.createElement('div');
-        //   bubble.classList.add('bubble');
-        //   const bubbleText = document.createElement('p');
-        //   bubbleText.innerHTML = question.replace(/\n/g, '<br>'); // Tambahkan tag br setelah setiap opsi
-        //   bubble.appendChild(bubbleText);
-        //   questionContainer.appendChild(bubble);
-        // });
-
       }
 
     })
@@ -58,7 +49,40 @@ function getData() {
     });
 }
 
+//MAIN EVENT
 getData(); // panggil fungsi untuk pertama kali saat halaman dimuat
+
+//EVENTS
+const saveButton = document.getElementById('save-button');
+const successMessage = document.getElementById('success-message');
+
+saveButton.addEventListener('click', () => {
+  const bubbleText = document.querySelector('.bubble p').innerHTML;
+  const resultData = { result: bubbleText };
+  
+  fetch('/save-result', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(resultData)
+  })
+  .then(response => {
+    if (response.ok) {
+      successMessage.textContent = 'Result saved successfully!';
+      successMessage.style.display = 'block';
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000); // Hide the success message after 3 seconds
+    } else {
+      console.error('Failed to save result.');
+    }
+  })
+  .catch(error => {
+    console.error('Error saving result:', error);
+  });
+});
+
 
 
 

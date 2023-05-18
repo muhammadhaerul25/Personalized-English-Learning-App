@@ -128,22 +128,62 @@ margin-top: 0px;
   margin-bottom: 35px;
 }
 
+#save-button {
+  border: none;
+  outline: none;
+  float: right;
+  color: #fff;
+  border-radius: 0 0 10px 0;
+  transition: background-color 0.3s ease;
+  background-color: #74AA9C;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+#save-button:hover {
+  background-color: #0e4135;
+}
+
+#success-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#success-message {
+  display: none;
+  background-color: #f9f8a4;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: -10px;
+  font-size: 12px;
+}
+
+
+
+
+
 #submit-button {
-border: none;
-outline: none;
-float: right;
-color: #fff;
-border-radius: 0 0 10px 0;
-transition: background-color 0.3s ease;
-background-color: #74AA9C;
-padding: 5px 10px;
-border-radius: 5px;
-cursor: pointer;
-font-size: 14px;
+  border: none;
+  outline: none;
+  float: right;
+  color: #fff;
+  border-radius: 0 0 10px 0;
+  transition: background-color 0.3s ease;
+  background-color: #e63946;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 #submit-button:hover {
-background-color: #0e4135;
+background-color: #c40233;
 }
 
 .hide {

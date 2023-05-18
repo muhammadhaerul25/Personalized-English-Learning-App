@@ -13,12 +13,13 @@ body {
   }
 
   header {
-	background: #74AA9C;
-	background: -webkit-linear-gradient(to right, #74AA9C, #0e4135);
-	background: linear-gradient(to right, #74AA9C, #0e4135);
-	color: white;
-	padding: 20px;
-	text-align: center;
+    background: #74AA9C;
+    background: -webkit-linear-gradient(to right, #74AA9C, #0e4135);
+    background: linear-gradient(to right, #74AA9C, #0e4135);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    z-index: 9;
 }
   
   .container {

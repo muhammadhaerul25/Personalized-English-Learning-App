@@ -67,7 +67,7 @@
   color: #fff;
   border-radius: 0 0 10px 0;
   transition: background-color 0.3s ease;
-  background-color: #74AA9C;
+  background-color: #e63946;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -78,7 +78,7 @@
 }
 
 #submit-button:hover {
-  background-color: #0e4135;
+  background-color: #c40233;
 }
 
 .hide {

@@ -154,7 +154,7 @@ for (var i = 0; i < tabs.length; i++) {
         <option value="Write a conversation about ...">Write a conversation about ...</option>
         <option value="Write a conversation between ...">Write a conversation between ...</option>
         <option value="Let's simulate an interview for">Let's simulate a interview for</option>
-        <option value="Give me a training">Give me a training</option>
+        <option value="Let's practice">Let's practice</option>
         <option value="Give me feedbacks">Give me feedbacks</option>
         `;
         break;
@@ -167,7 +167,7 @@ for (var i = 0; i < tabs.length; i++) {
           <option value="Write sentences using ...">Write sentences using ...</option>
           <option value="Correct my grammar mistakes in the following text: ...">Correct my grammar mistakes in the following text: ...</option>
           <option value="Write sentences using ...">Write sentences using ...</option>
-          <option value="Give me a training">Give me a training</option>
+          <option value="Let's practice">Let's practice</option>
           <option value="Give me feedbacks">Give me feedbacks</option>
         `;
         break;
@@ -181,7 +181,7 @@ for (var i = 0; i < tabs.length; i++) {
           <option value="Beautify this text: ...">Beautify this text: ...</option>
           <option value="Summarize this text: ...">Summarize this text: ...</option>
           <option value="Conclude this text: ...">Conclude this text: ...</option>
-          <option value="Give me a training">Give me a training</option>
+          <option value="Let's practice">Let's practice</option>
           <option value="Give me feedbacks">Give me feedbacks</option>
         `;
         break;
