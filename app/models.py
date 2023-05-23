@@ -1,6 +1,6 @@
 import openai
 
-API_Key = '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'
+API_Key = 'sk-'
 openai.api_key = API_Key
 
 #MODELS

@@ -1,56 +1,9 @@
-const questionContainer = document.querySelector('.question-container');
+import { getResult } from './helpers.js';
 
-// FUNCTIONS
-function addLoader() {
-  const loaderContainer = document.querySelector('.loader-container');
-  const loader = document.createElement('div');
-  loader.classList.add('loader');
-  loaderContainer.appendChild(loader);
-}
-
-function removeLoader() {
-  const loader = document.querySelector('.loader');
-  if (loader) {
-    loader.remove();
-  }
-}
-
-function getData() {
-  addLoader();
-  fetch('/result')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data); // periksa apakah data sudah diterima dengan benar
-      if (data.result.length === 0) {
-        setTimeout(() => {
-          getData();
-          removeLoader()
-        }, 0); // tunggu 1 detik sebelum mengambil data lagi
-      } else {
-
-        removeLoader()
-        const result = data.result;
-        const bubble = document.createElement('div');
-        bubble.classList.add('bubble');
-        const bubbleText = document.createElement('p');
-        bubbleText.innerHTML = result.replace(/\n/g, '<br>'); // Tambahkan tag br setelah setiap opsi
-        bubble.appendChild(bubbleText);
-        questionContainer.appendChild(bubble);
-
-      }
-
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-      setTimeout(() => {
-        getData();
-        removeLoader()
-      }, 0); // tunggu 1 detik sebelum mengambil data lagi
-    });
-}
 
 //MAIN EVENT
-getData(); // panggil fungsi untuk pertama kali saat halaman dimuat
+getResult('/result'); // panggil fungsi untuk pertama kali saat halaman dimuat
+
 
 //EVENTS
 const saveButton = document.getElementById('save-button');
@@ -58,28 +11,28 @@ const successMessage = document.getElementById('success-message');
 
 saveButton.addEventListener('click', () => {
   const bubbleText = document.querySelector('.bubble p').innerHTML;
-  const resultData = { result: bubbleText };
+  const resultTest = { result_test: bubbleText };
   
-  fetch('/save-result', {
+  fetch('/save-result-test', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(resultData)
+    body: JSON.stringify(resultTest)
   })
   .then(response => {
     if (response.ok) {
-      successMessage.textContent = 'Result saved successfully!';
+      successMessage.textContent = 'Result test saved successfully!';
       successMessage.style.display = 'block';
       setTimeout(() => {
         successMessage.style.display = 'none';
       }, 3000); // Hide the success message after 3 seconds
     } else {
-      console.error('Failed to save result.');
+      console.error('Failed to save result test.');
     }
   })
   .catch(error => {
-    console.error('Error saving result:', error);
+    console.error('Error saving result test:', error);
   });
 });
 
@@ -105,7 +58,6 @@ alertCancel.addEventListener('click', (event) => {
 
 alertOk.addEventListener('click', (event) => {
   event.preventDefault();
-  // redirect ke halaman lain
   window.location.href = '/';
 
 });

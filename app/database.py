@@ -1,13 +1,14 @@
 import time
-from pymongo import MongoClient
-from test_functions import english_level_mapping
+from pymongo import MongoClient, ASCENDING
+from helpers import english_level_mapping
 
 #MONGODB
 client = MongoClient("mongodb://localhost:27017")
 db = client["personalized_english_learning"]
 users = db["users"]
-learning_history = db['learning']
-placements_test = db['placement_tests']
+learning = db['learning']
+placements_tests = db['placement_tests']
+study_plans = db['study_plans']
 
 
 class User:
@@ -26,7 +27,9 @@ class User:
             "name": self.name,
             "email": self.email,
             "password": self.password,
-            "english_level": self.english_level
+            "english_level": self.english_level,
+            'timestamp': int(time.time()),
+            'joined_date': time.strftime("%d/%m/%Y")
         })
 
     def register(self):
@@ -67,30 +70,60 @@ class User:
     
     @staticmethod
     def update_english_level(id, english_level):
-        users.update_one({'_id': id}, {'$set': {'english_level': english_level}})
-        
+        users.update_one({'_id': id}, {'$set': {'english_level': english_level_mapping(english_level)}})
 
-class LearningHistory:
+
+class Learning:
     @staticmethod
     def insert(user_id, email, mode, message, response):
-        learning_history.insert_one({
+        learning.insert_one({
             'user_id': user_id,
             'email': email,
             'mode': mode,
             'message': message,
             'response': response,
-            'timestamp': int(time.time())
+            'timestamp': int(time.time()),
+            'date': time.strftime("%d/%m/%Y")
         })
+
+    @staticmethod
+    def get_chat_history(user_id):
+        chat_history = learning.find({'user_id': user_id}).sort('timestamp', ASCENDING)
+        result = []
+        for doc in chat_history:
+            result.append({
+                'mode': doc['mode'],
+                'message': doc['message'],
+                'response': doc['response']
+            })
+        return result
+
 
 
 class PlacementTest:
     @staticmethod
-    def insert(user_id, email, placement_result, english_level):
-        placements_test.insert_one({
+    def insert(user_id, email, placement_test_dict, placement_result, english_level):
+        placements_tests.insert_one({
             'user_id': user_id,
             'email': email,
+            'placement_test_dict': placement_test_dict,
             'placement_result': placement_result,
             'english_level': english_level_mapping(english_level),
-            'timestamp': int(time.time())
+            'timestamp': int(time.time()),
+            'date': time.strftime("%d/%m/%Y"),
+        })
+
+
+
+class StudyPlan:
+    @staticmethod
+    def insert(user_id, email, study_plan_dict, study_plan):
+        study_plans.insert_one({
+            'user_id': user_id,
+            'email': email,
+            'study_plan_dict': study_plan_dict,
+            'study_plan': study_plan,
+            'timestamp': int(time.time()),
+            'date': time.strftime("%d/%m/%Y"),
         })
 

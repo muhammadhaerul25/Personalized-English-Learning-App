@@ -60,7 +60,7 @@ main {
 
 
 
-/* Style for the exit button */
+/* Style for the logout button */
 .logout-button {
   background-color: transparent;
   border: white solid 1px;
@@ -107,6 +107,7 @@ main {
   
   #alert-ok {
     background-color: #e63946;
+    font-size: 16px;
     color: white;
     border: none;
     border-radius: 5px;
@@ -117,6 +118,7 @@ main {
   
   #alert-cancel {
     background-color: #c7c6c6;
+    font-size: 16px;
     color: black;
     border: none;
     border-radius: 5px;

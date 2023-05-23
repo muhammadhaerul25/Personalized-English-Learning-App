@@ -7,8 +7,8 @@ import prompts as prompt
 from session import session, pronunciation_dict, context_dict, reading_dict, placement_test_dict, study_plan_dict 
 from session import configure_session, create_session, check_session, delete_session
 from models import chatgpt
-from database import User, LearningHistory, PlacementTest
-from test_functions import extract_english_level
+from database import User, Learning, PlacementTest, StudyPlan
+from helpers import extract_english_level, is_any_english_level 
 
 
 #FLASK-APP
@@ -62,12 +62,16 @@ def logout():
 @app.route('/learning')
 def learning():
     user = User.get_user(session)
-    name = None
-    english_level = None
-    if user:
-        name = User.get_name(user['_id'])
-        english_level = User.get_english_level(user['_id'])
+    name = user.get('name') if user else None
+    english_level = is_any_english_level(user.get('english_level') if user else None)
     return render_template('learning.html', name=name, english_level=english_level)
+
+
+@app.route('/chat-history', methods=['GET'])
+def get_chat_history():
+    user = User.get_user(session)
+    chat_history = Learning.get_chat_history(user['_id'])
+    return jsonify({'chat_history': chat_history}), 200
 
 
 @app.route('/chat', methods=['POST'])
@@ -80,12 +84,14 @@ def chat():
         response = get_response(mode, message)
         user = User.get_user(session)
         if user:
-            LearningHistory.insert(user['_id'], user['email'], mode, message, response)
+            Learning.insert(user['_id'], user['email'], mode, message, response)
         return jsonify({'message': response}), 200
     except:
         return jsonify({'message': 'Sorry, something went wrong. Please, try again later.'}), 500
 
 def get_response(mode, message):
+    if not check_session():
+        return 'Please login first'
     chat_dict = None
     if mode == 'pronunciation':
         chat_dict = pronunciation_dict[session["user"]]
@@ -170,22 +176,23 @@ def result():
         result = 'Sorry, something went wrong. Please, refresh the page.'
     return jsonify({"result": result})
 
-@app.route('/save-result', methods=['POST'])
-def save_result():
-    data = request.get_json()
-    result = data.get('result')
-    english_level = extract_english_level(result)
+@app.route('/save-result-test', methods=['POST'])
+def save_result_test():
+    placement_result = request.get_json().get('result_test')
+    english_level = extract_english_level(placement_result)
     user = User.get_user(session)
     if user:
-        PlacementTest.insert(user['_id'], user['email'], result, english_level)
+        PlacementTest.insert(user['_id'], user['email'], placement_test_dict[session['user']], placement_result, english_level)
         User.update_english_level(user['_id'], english_level)
-    return 'Result saved successfully!'
+    return 'Result test saved successfully!'
+
 
 
 #STUDY PLAN
 @app.route('/study-plan')
 def study_plan():
     return render_template('study_plan.html')
+
 
 @app.route('/create-study-plan', methods=['POST'])
 def create_study_plan():
@@ -196,7 +203,8 @@ def create_study_plan():
     end_date = request.json['endDate']
     days = request.json['days']
     hours = request.json['hours']
-    plan = f"My English level is {english_level}, so I will focus on {', '.join(goals)} + {other_goals}. I plan to start studying on ${start_date} and finish on ${end_date}, for a total of ${days} days per week and ${hours} hours per day. Based on these information, give me a study plan."
+
+    plan = prompt.create_study_plan_prompt(english_level, goals, other_goals, start_date, end_date, days, hours)
 
     try:
         study_plan_dict[session['user']].append({"role": "user", "content": plan})
@@ -208,7 +216,25 @@ def create_study_plan():
 
     return jsonify({"study_plan": study_plan})
 
+
+@app.route('/save-study-plan', methods=['POST'])
+def save_study_plan():
+    study_plan_data = request.get_json().get('study_plan')
+    user = User.get_user(session)
+    if user:
+        StudyPlan.insert(user['_id'], user['email'], study_plan_dict[session['user']], study_plan_data)
+    return 'Study plan saved successfully!'
+
+
+@app.route('/get-english-level')
+def get_english_level():
+    user = User.get_user(session)
+    if user:
+        english_level = User.get_english_level(user['_id'])
+    return jsonify({'englishLevel': english_level})
+
    
+
 
 if __name__ == '__main__':
     app.run(debug=True)

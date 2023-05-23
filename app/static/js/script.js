@@ -29,3 +29,4 @@ alertOkButton.addEventListener('click', function() {
 alertCancelButton.addEventListener('click', function() {
   alertDialog.classList.add('hide');
 });
+

@@ -67,7 +67,7 @@
   color: #fff;
   border-radius: 0 0 10px 0;
   transition: background-color 0.3s ease;
-  background-color: #e63946;
+  background-color: #74AA9C;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -78,7 +78,7 @@
 }
 
 #submit-button:hover {
-  background-color: #c40233;
+  background-color: #0e4135;
 }
 
 .hide {
@@ -87,7 +87,7 @@
 
 
 #alert-dialog {
-  width: 220px;
+  width: 250px;
   height: auto;
   background-color: white;
   border: 1px solid #ccc;

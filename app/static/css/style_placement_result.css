@@ -97,10 +97,10 @@ h3 {
 
 
 .loader-container {
-display: flex;
-justify-content: flex-end;
-align-items: center;
-margin-top: 0px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0px;
 }
 
 .loader {
@@ -132,19 +132,18 @@ margin-top: 0px;
   border: none;
   outline: none;
   float: right;
-  color: #fff;
+  color: black;
   border-radius: 0 0 10px 0;
   transition: background-color 0.3s ease;
-  background-color: #74AA9C;
+  background-color: #f9d71c;
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  margin-right: 10px;
 }
 
 #save-button:hover {
-  background-color: #0e4135;
+  background-color: #d2b304;
 }
 
 #success-container {

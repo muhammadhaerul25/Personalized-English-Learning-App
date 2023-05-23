@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Halaman Pertama - My Flask App
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/page1.css') }}">
+{% endblock %}
+
+{% block content %}
+    <!-- Konten halaman -->
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/page1.js') }}"></script>
+{% endblock %}

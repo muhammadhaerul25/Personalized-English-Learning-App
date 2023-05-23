@@ -30,13 +30,15 @@ main {
 
 .plan-container {
   display: flex;
+  flex-direction: column;
   position: relative;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
   border: 1px solid #ccc;
   padding: 0px; 
-  min-height: 0px;
+  max-height: auto;
+  overflow-y: scroll;
 }
 
 
@@ -56,12 +58,6 @@ h3 {
   font-weight: bold;
 }
 
-
-/* .question-bubbles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-} */
 
 .bubble {
   display: flex;
@@ -173,6 +169,16 @@ input[type="checkbox"]:checked + label {
   background-color: #dcf6e8;
 }
 
+
+select option:hover {
+  background-color: #dcf6e8;
+}
+
+select option:checked {
+  background-color: #dcf6e8;
+}
+
+
 /* style untuk dropdown ketika difokuskan */
 #goals-option:focus-within {
   border: 2px solid #dcf6e8;
@@ -184,6 +190,48 @@ input[type="checkbox"]:checked + label {
   font-weight: normal;
 }
 
+.button-container {
+  float:right;
+}
+
+#save-button {
+  display: none;
+  float: right;
+  border: none;
+  outline: none;
+  color: black;
+  border-radius: 0 0 10px 0;
+  transition: background-color 0.3s ease;
+  background-color: #f9d71c;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+
+#save-button:hover {
+  background-color: #d2b304;
+}
+
+#success-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#success-message {
+  display: none;
+  background-color: #f9f8a4;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  margin-top: -10px;
+  margin-bottom: 0px;
+}
 
 
 

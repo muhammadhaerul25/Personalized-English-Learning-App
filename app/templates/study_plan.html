@@ -4,8 +4,8 @@
     <title>Study Plan</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/exit_button.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_study_plan.css') }}">
     
   </head>
@@ -13,6 +13,9 @@
 
     <main>
         <div class="container">
+          <div id="success-container">
+            <p id="success-message">Study plan saved successfully!</p>
+          </div>
             
             <form id="study-plan-form">
                 <div class="form-container">
@@ -22,12 +25,13 @@
                             <label for="english-level">English Level:</label>
                             <select id="english-level" name="english-level">
                             <option value="">Select English Level</option>
-                            <option value="A1">A1 - Beginner</option>
-                            <option value="A2">A2 - Elementary</option>
-                            <option value="B1">B1 - Intermediate</option>
-                            <option value="B2">B2 - Upper-Intermediate</option>
-                            <option value="C1">C1 - Advanced</option>
-                            <option value="C2">C2 - Proficient</option>
+                            <option value="Unknown">Unknown</option>
+                            <option value="A1 (Beginner)">A1 (Beginner)</option>
+                            <option value="A2 (Elementary)">A2 (Elementary)</option>
+                            <option value="B1 (Intermediate)">B1 (Intermediate)</option>
+                            <option value="B2 (Upper Intermediate)">B2 (Upper Intermediate)</option>
+                            <option value="C1 (Advanced)">C1 (Advanced)</option>
+                            <option value="C2 (Proficient)">C2 (Proficient)</option>
                             </select>
                             
                             <!-- Goals -->
@@ -78,13 +82,37 @@
           
             <div class="loader-container"></div>
 
-          <div class="plan-container"> </div>
+          <div class="plan-container"> 
+
+            <div id="success-container">
+              <p id="success-message">Study plan saved successfully!</p>
+            </div>
+
+            <div id="buble-container"></div>
+
+            <div class="button-container">
+              <button id="save-button" class="save-button">Save Study Plan</button>
+            </div>
+            
+          </div>
 
         </div>
+
+        <button id="exit-button" class="exit-button">Exit</button>
+        <div id="alert-exit-dialog" class="hide">
+          <div id="alert-exit-message">Are you sure you want to exit?</div>
+          <div id="alert-exit-buttons">
+            <button id="alert-exit-ok">Yes</button>
+            <button id="alert-exit-cancel">Cancel</button>
+          </div>
+        </div>
+        
     </main>
       
       
     
     <script src="{{ url_for('static', filename='js/script_study_plan.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/exit_button.js') }}"></script>
+
   </body>
 </html>

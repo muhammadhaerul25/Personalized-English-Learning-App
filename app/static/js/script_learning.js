@@ -2,7 +2,8 @@
 const form = document.getElementById('user-form');
 const userInput = document.getElementById('user-input');
 const modeInput = document.getElementById('mode');
-
+const dataChatHistory = [];
+// let dataChatHistory = [];
 
 // FUNCTIONS
 function addLoader() {
@@ -31,19 +32,61 @@ function createBubble(sender, message) {
   return bubble;
 }
 
-// function openTab(evt, tabName) {
-//   var i, tabcontent, tablinks;
-//   tabcontent = document.getElementsByClassName("conversation");
-//   for (i = 0; i < tabcontent.length; i++) {
-//     tabcontent[i].classList.remove("active");
-//   }
-//   tablinks = document.getElementsByClassName("tablink");
-//   for (i = 0; i < tablinks.length; i++) {
-//     tablinks[i].classList.remove("active");
-//   }
-//   document.getElementById(tabName).classList.add("active");
-//   evt.currentTarget.classList.add("active");
-// }
+function displayChatHistory(chatHistory, activeMode) {
+  const activeConversation = document.getElementById(activeMode);
+  console.log(activeConversation);
+  console.log(chatHistory);
+
+  // Tampilkan riwayat chat sesuai dengan mode yang aktif
+  chatHistory.forEach(chat => {
+    const { mode, message, response } = chat;
+
+    // Cek apakah mode dari chat saat ini sama dengan mode yang aktif
+    if (mode === activeMode) {
+      // Buat elemen bubble untuk setiap pesan
+      const userBubble = createBubble('user', message);
+      const botBubble = createBubble('bot', response);
+
+      // Tambahkan bubble ke aktivitas percakapan
+      activeConversation.appendChild(userBubble);
+      activeConversation.appendChild(botBubble);
+    }
+  });
+
+  // Menggulir ke bawah setelah chat ditampilkan
+  activeConversation.scrollTop = activeConversation.scrollHeight;
+}
+
+// Fungsi untuk mengambil riwayat chat dari server
+function getChatHistory() {
+  fetch('/chat-history')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      dataChatHistory.push(data.chat_history);
+      displayChatHistory(dataChatHistory[0], 'pronunciation');
+    })
+    .catch(error => console.error(error));
+}
+
+
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("conversation");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].classList.remove("active");
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].classList.remove("active");
+  }
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.classList.add("active");
+  // getChatHistory();
+  // displayChatHistory(dataChatHistory[0], tabName);
+}
+
+
 
 
 
@@ -74,10 +117,9 @@ tabs.forEach(tab => {
         targetConversation.classList.remove('fade-in');
       }, 500);
     }, 500);
-
-    
   });
 });
+
 
 // event pada saat form dikirim
 form.addEventListener('submit', function(e) {
@@ -87,6 +129,7 @@ form.addEventListener('submit', function(e) {
     const userBubble = createBubble('user', message);
     const activeConversation = document.querySelector('.conversation.active');
     activeConversation.appendChild(userBubble);
+    activeConversation.scrollTop = activeConversation.scrollHeight;
     userInput.value = '';
     addLoader();
 
@@ -109,25 +152,6 @@ form.addEventListener('submit', function(e) {
 });
 
 
-// BUTTONS
-// exit button
-const exitButton = document.getElementById('exit-button');
-const alertDialog = document.getElementById('alert-dialog');
-const alertOkButton = document.getElementById('alert-ok');
-const alertCancelButton = document.getElementById('alert-cancel');
-
-exitButton.addEventListener('click', function() {
-  alertDialog.classList.remove('hide');
-});
-
-alertOkButton.addEventListener('click', function() {
-  window.location.href = "/";
-});
-
-alertCancelButton.addEventListener('click', function() {
-  alertDialog.classList.add('hide');
-});
-
 
 // DROPDOWN
 const dropdown = document.getElementById('message-options-dropdown');
@@ -135,6 +159,14 @@ const dropdown = document.getElementById('message-options-dropdown');
 dropdown.addEventListener('change', function() {
   userInput.value = dropdown.value;
 });
+
+
+
+//MAIN
+// Tampilkan riwayat chat saat halaman dimuat
+// getChatHistory();
+
+
 
 // Generate dropdown for Pronunciation tab when page loads
 for (var i = 0; i < tabs.length; i++) {
@@ -148,6 +180,10 @@ for (var i = 0; i < tabs.length; i++) {
         dropdown.innerHTML = `
         <option value="">Select a prompt</option>
         <option value="Explain who are you and what can you do?">Explain who are you and what can you do?</option>
+        <option value="Explain my English level and how can I improve it">Explain my English level and how can I improve it</option>
+        <option value="Recall what I learned last time">Recall what I learned last time</option>
+        <option value="I want to learn about ...">I want to learn about ...</option>
+        <option value="Give me lesson about...">Give me lesson about ...</option>
         <option value="Let's have a conversation about ...">Let's have a conversation about ...</option>
         <option value="Let's have a conversation about ... and suggest different vocabularies">Let's have a conversation about ... and suggest different vocabularies</option>
         <option value="Let's have a conversation about ... and correct my mistakes">Let's have a conversation about ... and correct my mistakes</option>
@@ -162,6 +198,10 @@ for (var i = 0; i < tabs.length; i++) {
         dropdown.innerHTML = `
           <option value="">Select a prompt</option>
           <option value="Explain who are you and what can you do?">Explain who are you and what can you do?</option>
+          <option value="Explain my English level and how can I improve it">Explain my English level and how can I improve it</option>
+          <option value="Recall what I learned last time">Recall what I learned last time</option>
+          <option value="I want to learn about ...">I want to learn about ...</option>
+          <option value="Give me lesson about...">Give me lesson about ...</option>
           <option value="Explain about ...">Explain about ...</option>
           <option value="What is the meaning of ...">What is the meaning of ...</option>
           <option value="Write sentences using ...">Write sentences using ...</option>
@@ -175,6 +215,10 @@ for (var i = 0; i < tabs.length; i++) {
         dropdown.innerHTML = `
           <option value="">Select a prompt</option>
           <option value="Explain who are you and what can you do?">Explain who are you and what can you do?</option>
+          <option value="Explain my English level and how can I improve it">Explain my English level and how can I improve it</option>
+          <option value="Recall what I learned last time">Recall what I learned last time</option>
+          <option value="I want to learn about ...">I want to learn about ...</option>
+          <option value="Give me lesson about ...">Give me lesson about ...</option>
           <option value="Write a text about ...">Write a text about ...</option>
           <option value="Explain this text: ...">Explain this text: ...</option>
           <option value="Simplify this text: ...">Simplify this text: ...</option>
