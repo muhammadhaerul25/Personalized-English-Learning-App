@@ -64,10 +64,10 @@
 #submit-button {
   border: none;
   outline: none;
-  color: #fff;
+  color: black;
   border-radius: 0 0 10px 0;
   transition: background-color 0.3s ease;
-  background-color: #74AA9C;
+  background-color: #f9d71c;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -78,7 +78,7 @@
 }
 
 #submit-button:hover {
-  background-color: #0e4135;
+  background-color: #d2b304;
 }
 
 .hide {

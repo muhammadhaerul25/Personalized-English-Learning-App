@@ -2,7 +2,7 @@ import { getQuestions, submitAnswers } from './helpers.js';
 
 
 //MAIN
-getQuestions('/section1'); // panggil fungsi untuk pertama kali saat halaman dimuat
+getQuestions('/section1');
 
 
 //BUTTONS

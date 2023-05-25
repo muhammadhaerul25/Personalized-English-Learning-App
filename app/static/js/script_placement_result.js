@@ -2,10 +2,11 @@ import { getResult } from './helpers.js';
 
 
 //MAIN EVENT
-getResult('/result'); // panggil fungsi untuk pertama kali saat halaman dimuat
+getResult('/get-result-test'); 
 
 
 //EVENTS
+// Event pada saat tombol save button diklik
 const saveButton = document.getElementById('save-button');
 const successMessage = document.getElementById('success-message');
 
@@ -22,13 +23,19 @@ saveButton.addEventListener('click', () => {
   })
   .then(response => {
     if (response.ok) {
-      successMessage.textContent = 'Result test saved successfully!';
+      window.scrollTo(0, 0);
+      successMessage.textContent = 'Success to save result test!';
       successMessage.style.display = 'block';
       setTimeout(() => {
         successMessage.style.display = 'none';
       }, 3000); // Hide the success message after 3 seconds
     } else {
-      console.error('Failed to save result test.');
+      window.scrollTo(0, 0);
+      successMessage.textContent = 'Failed to save result test!';
+      successMessage.style.display = 'block';
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000); // Hide the success message after 3 seconds
     }
   })
   .catch(error => {
@@ -37,30 +44,6 @@ saveButton.addEventListener('click', () => {
 });
 
 
-
-
-//BUTTONS
-const submitButton = document.querySelector('.submit-button');
-const alertDialog = document.querySelector('#alert-dialog');
-const alertOk = document.querySelector('#alert-ok');
-const alertCancel = document.querySelector('#alert-cancel');
-
-submitButton.addEventListener('click', (event) => {
-  event.preventDefault();
-  alertDialog.classList.remove('hide');
-});
-
-alertCancel.addEventListener('click', (event) => {
-  event.preventDefault();
-  alertDialog.classList.add('hide');
-});
-
-
-alertOk.addEventListener('click', (event) => {
-  event.preventDefault();
-  window.location.href = '/';
-
-});
 
 
 

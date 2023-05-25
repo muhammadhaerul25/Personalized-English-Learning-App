@@ -1,4 +1,15 @@
 import { placementTestTime, breakTestTime, textSpanCountdown } from './config.js';
+import { pronunciationDropdownOptions, contextDropdownOptions, readingDropdownOptions } from './config.js';
+
+
+// Bubbles
+function createBubble(sender, message) {
+  const bubble = document.createElement('div');
+  bubble.classList.add('message', sender);
+  bubble.innerHTML = message.replace(/\n/g, '<br>');
+  return bubble;
+}
+
 
 
 // Loaders
@@ -15,6 +26,106 @@ function addLoader() {
       loader.remove();
     }
   }
+
+
+
+// Tabs
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("conversation");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].classList.remove("active");
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].classList.remove("active");
+  }
+  document.getElementById(tabName).classList.add("active");
+  evt.currentTarget.classList.add("active");
+}
+
+
+
+// Chats
+function getChatHistory() {
+  fetch('/chat-history')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      displayChatHistory(data.chat_history, 'pronunciation');
+    })
+    .catch(error => console.error(error));
+}
+
+function displayChatHistory(chatHistory, activeMode) {
+  const activeConversation = document.getElementById(activeMode);
+  console.log(activeConversation);
+  console.log(chatHistory);
+
+  // Tampilkan riwayat chat sesuai dengan mode yang aktif
+  chatHistory.forEach(chat => {
+    const { mode, message, response } = chat;
+
+    // Cek apakah mode dari chat saat ini sama dengan mode yang aktif
+    if (mode === activeMode) {
+      // Buat elemen bubble untuk setiap pesan
+      const userBubble = createBubble('user', message);
+      const botBubble = createBubble('bot', response);
+
+      // Tambahkan bubble ke aktivitas percakapan
+      activeConversation.appendChild(userBubble);
+      activeConversation.appendChild(botBubble);
+    }
+  });
+
+  // Menggulir ke bawah setelah chat ditampilkan
+  activeConversation.scrollTop = activeConversation.scrollHeight;
+}
+
+
+// Dropdowns
+function generatePromptDropdownOptions(mode) {
+  switch (mode) {
+    case "pronunciation":
+      return pronunciationDropdownOptions;
+    case "context":
+      return contextDropdownOptions;
+    case "reading":
+      return readingDropdownOptions;
+    default:
+      return '';
+  }
+}
+
+
+
+//Inputs
+function clearUserChatInput() {
+  const userInput = document.getElementById('user-input');
+  userInput.value = "";
+}
+
+function getStudyPlanInputValues() {
+  const englishLevel = document.getElementById('english-level').value;
+  const goals = Array.from(document.querySelectorAll('input[name="goals[]"]:checked')).map(el => el.value);
+  const otherInput = document.getElementById('other-input').value;
+  const startDate = document.getElementById('start-date').value;
+  const endDate = document.getElementById('end-date').value;
+  const days = document.getElementById('days').value;
+  const hours = document.getElementById('hours').value;
+
+  return {
+    englishLevel,
+    goals,
+    otherInput,
+    startDate,
+    endDate,
+    days,
+    hours
+  };
+}
+
+
 
 
 // Countdowns
@@ -37,7 +148,6 @@ function placementTestCountdown(timeDuration) {
 
     if (distance < 0) {
       clearInterval(countdownInterval);
-      // Time countdown is finished, perform further actions here
       timerElement.textContent = "00:00";
       timesupContainer.style.display = 'block';
       spanCountdown(textSpanCountdown);
@@ -47,7 +157,6 @@ function placementTestCountdown(timeDuration) {
 
   
   function spanCountdown(textSpanCountdown) {
-    // Menambahkan kelas 'disable-selection' ke elemen body
     var body = document.querySelector('body');
     body.classList.add('disable-selection');
 
@@ -61,12 +170,12 @@ function placementTestCountdown(timeDuration) {
       countdownElement.textContent = countdownValue;
   
       if (countdownValue <= 0) {
-        //Time countdown is finished, perform further actions here
         clearInterval(countdownInterval);
         alertOk.click();
       }
     }, 1000);
   }
+
 
 
 // Data Fetching
@@ -166,8 +275,46 @@ function getQuestions(route) {
   }
 
 
+  function getEnglishLevelAndSetItToDropdown() {
+    fetch('/get-english-level')
+      .then(response => response.json())
+      .then(data => {
+        const englishLevelDropdown = document.getElementById('english-level');
+        const englishLevelFromDatabase = data.englishLevel;
+        
+        // Cek apakah nilai ada dalam dropdown
+        const optionExists = Array.from(englishLevelDropdown.options).some(option => option.value === englishLevelFromDatabase);
+  
+        if (!optionExists) {
+          const newOption = new Option(englishLevelFromDatabase, englishLevelFromDatabase);
+          englishLevelDropdown.add(newOption);
+        }
+  
+        englishLevelDropdown.value = englishLevelFromDatabase;
+      })
+      .catch(error => {
+        console.error('Failed to fetch English level from database:', error);
+      });
+  }
+  
+
+
 
 //Export
-export {getQuestions, submitAnswers, getResult, addLoader, removeLoader, placementTestCountdown, spanCountdown };
+export {
+  addLoader,
+  clearUserChatInput,
+  createBubble,
+  generatePromptDropdownOptions,
+  getChatHistory,
+  getEnglishLevelAndSetItToDropdown,
+  getStudyPlanInputValues,
+  getQuestions,
+  placementTestCountdown,
+  removeLoader,
+  getResult,
+  spanCountdown,
+  submitAnswers
+};
 
   

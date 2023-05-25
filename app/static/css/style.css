@@ -4,124 +4,150 @@
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-    line-height: 1.5;
-    color: black;
-    background-color: #fff;
-  }
-
-  header {
-    background: #74AA9C;
-    background: -webkit-linear-gradient(to right, #74AA9C, #0e4135);
-    background: linear-gradient(to right, #74AA9C, #0e4135);
-    color: white;
-    padding: 10px;
-    text-align: center;
-    z-index: 9;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: black;
+  background-color: #fff;
 }
-  
-  .container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 20px;
-  }
+
+header {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #74AA9C;
+  background: -webkit-linear-gradient(to right, #74AA9C, #0e4135);
+  background: linear-gradient(to right, #74AA9C, #0e4135);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  z-index: 9;
+}
+
+main {
+  margin-top: 120px; /* Atur sesuai kebutuhan Anda */
+}
+
+#pel-letter {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: -30px; /* Tambahkan margin bottom */
+}
 
 
-  .card {
-    width: 80%;
-    background-color: transparent;
-    margin: 0 auto 40px;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
-    0 10px 10px rgba(0,0,0,0.22);
-    position: relative;
-    text-align: center;
-  }
-  
-  .card h2 {
-    font-size: 25px;
-    margin-bottom: 20px;
-  }
-  
-  .card p {
-    font-size: 15px;
-    margin-bottom: 40px;
-  }
-  
-  .card a {
-    display: inline-block;
-    background-color: #333;
-    color: #fff;
-    padding: 15px 30px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 20px;
-    transition: background-color 0.3s ease;
-  }
+.right {
+  margin-left: auto;
+}
 
-  .card a.button {
-    background-color: #74AA9C;
-    background: linear-gradient(to right, #74AA9C, #0e4135);
-    color: #fff;
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+
+.nav-item {
+  margin-right: 20px;
+  color:white;
+}
+
+.nav-link {
+  font-family: 'Montserrat';
+  text-decoration: none;
+  color: white;
+  font-weight: 400;
+}
+
+.nav-link.active {
+  font-weight: bold;
+}
+
+
+
+
+
+/* Style for the logout button */
+.logout-button {
+  margin-top: -7.5px;
+  background-color: transparent;
+  border: white solid 1px;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #c40233;
+}
+
+
+.hide {
+  display: none;
+  }
+  
+  
+  #alert-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 1;
+    margin-bottom: 10px;
+  }
+  
+  #alert-message {
     font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
   }
   
-  .card a.button:hover {
-    background: #0e4135;
+  #alert-ok {
+    background-color: #e63946;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
   }
   
-  .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+  #alert-cancel {
+    background-color: #c7c6c6;
+    font-size: 14px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: auto;
+    float: right;
   }
   
-  .card-container .card {
-    width: 40%;
-    margin: 20px;
+  #alert-buttons button:hover {
+    filter: brightness(70%);
   }
+  
 
-  .card-container .card a {
-    background-color: #74AA9C;
-    color: #fff;
-    font-size: 13px;
-  }
-
-  .card-container .card a:hover {
-    background-color: #0e4135;
-  }
-  
-  
-
-  @media screen and (max-width: 768px) {
-    .card {
-      padding: 20px;
-    }
-    
-    .card h2 {
-      font-size: 24px;
-    }
-    
-    .card p {
-      font-size: 16px;
-    }
-    
-    .card a {
-      font-size: 16px;
-      padding: 10px 20px;
-    }
-    
-    .card-container .card {
-      width: 80%;
-    }
-  }
-  
-  
-  footer {
+footer {
     background: #74AA9C;
     background: -webkit-linear-gradient(to right, #74AA9C, #0e4135);
     background: linear-gradient(to right, #74AA9C, #0e4135);
@@ -129,4 +155,33 @@ body {
     padding: 10px;
     text-align: center;
   }
+
+
+/* CSS non-responsif */
+
+/* CSS untuk ukuran layar yang lebih kecil dari 600px */
+@media screen and (max-width: 600px) {
+  main {
+    margin-top: 170px;
+  }
   
+}
+
+/* CSS untuk ukuran layar antara 601px dan 900px */
+@media screen and (min-width: 601px) and (max-width: 900px) {
+  header {
+    padding: 15px;
+  }
+  
+  .nav-item {
+    margin-right: 10px;
+  }
+}
+
+/* CSS untuk ukuran layar lebih besar dari 900px */
+@media screen and (min-width: 901px) {
+  header {
+    padding: 20px;
+  }
+}
+

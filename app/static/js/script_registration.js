@@ -10,6 +10,8 @@ signInButton.addEventListener('click', () => {
 	container.classList.remove("right-panel-active");
 });
 
+
+
 //REGISTER EVENT
 const registerForm = document.getElementById("form-register");
 const nameInput = document.querySelector("#name-register");
@@ -74,6 +76,7 @@ registerForm.addEventListener("submit", (event) => {
 registerButton.addEventListener("click", () => {
   registerForm.submit();
 });
+
 
 
 //LOGIN EVENT

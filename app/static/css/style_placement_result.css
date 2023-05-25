@@ -43,13 +43,6 @@ main {
 
 
 
-
-@media only screen and (max-width: 768px) {
-.container {
-  max-width: 90%;
-}
-}
-
 .question-container {
   flex: 100%;
   height: 400px; /* atur tinggi container sesuai keinginan */
@@ -163,6 +156,14 @@ h3 {
   font-size: 12px;
 }
 
+.success {
+  background-color: green;
+}
+
+.failed {
+  background-color: #e2747d;
+}
+
 
 
 
@@ -241,6 +242,11 @@ filter: brightness(70%);
 
 
 
-
+/* RESPONSIVE  */
+@media only screen and (max-width: 768px) {
+  .container {
+    max-width: 90%;
+  }
+}
 
 

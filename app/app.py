@@ -4,10 +4,12 @@ from flask import render_template, jsonify, redirect, url_for
 
 #FILES
 import prompts as prompt
-from session import session, pronunciation_dict, context_dict, reading_dict, placement_test_dict, study_plan_dict 
-from session import configure_session, create_session, check_session, delete_session
+from session import session, pronunciation_dict, context_dict, reading_dict, placement_test_dict, study_plan_dict
+from session import configure_session, create_session, check_session, delete_session, check_prompt_session, recreate_placement_test_prompt_session 
 from models import chatgpt
 from database import User, Learning, PlacementTest, StudyPlan
+
+from config import MESSAGES
 from helpers import extract_english_level, is_any_english_level 
 
 
@@ -24,10 +26,13 @@ def require_login():
     allowed_routes = ['registration', 'login', 'register','logout', 'static']
     if not check_session() and request.endpoint not in allowed_routes:
         return redirect('/registration')
+    if not check_prompt_session():
+        logout()
 
 @app.route('/')
+@app.route('/home')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
 
 
 #REGISTRATION    
@@ -76,22 +81,19 @@ def get_chat_history():
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    try:
-        message = request.json.get('user_input')
-        mode = request.json.get('mode')
-        if not (message and mode):
-            return jsonify({'message': 'Please try again.'}), 400
-        response = get_response(mode, message)
-        user = User.get_user(session)
-        if user:
-            Learning.insert(user['_id'], user['email'], mode, message, response)
-        return jsonify({'message': response}), 200
-    except:
-        return jsonify({'message': 'Sorry, something went wrong. Please, try again later.'}), 500
+    message = request.json.get('user_input')
+    mode = request.json.get('mode')
+    if not (message and mode):
+        return jsonify({'message': 'Please try again.'}), 400
+    response = get_response(mode, message)
+    user = User.get_user(session)
+    if user:
+        Learning.insert(user['_id'], user['email'], mode, message, response)
+    return jsonify({'message': response}), 200
 
 def get_response(mode, message):
     if not check_session():
-        return 'Please login first'
+        return MESSAGES["session_expired"]
     chat_dict = None
     if mode == 'pronunciation':
         chat_dict = pronunciation_dict[session["user"]]
@@ -99,15 +101,13 @@ def get_response(mode, message):
         chat_dict = context_dict[session["user"]]
     elif mode == 'reading':
         chat_dict = reading_dict[session["user"]]
-
     if chat_dict:
         chat_dict.append({"role": "user", "content": message})
         response = chatgpt(chat_dict)
         chat_dict.append({"role": "assistant", "content": response})
     else:
-        response = 'Sorry, something went wrong. Please try again later.'
+        response = MESSAGES['error_request']
     return response
-
 
 
 #PLACEMENT TEST
@@ -133,6 +133,7 @@ def placement_result():
 
 @app.route('/section1')
 def section1():
+    recreate_placement_test_prompt_session(session['user'], User.get_user(session))
     return get_questions(prompt.section1_prompt)
 
 @app.route('/section2')
@@ -143,38 +144,34 @@ def section2():
 def section3():
     return get_questions(prompt.section3_prompt)
 
+
 def get_questions(prompt):
-    try:
-        placement_test_dict[session['user']].append(prompt)
-        response = chatgpt(placement_test_dict[session['user']])
-        placement_test_dict[session['user']].append({"role": "assistant", "content": response})
-        questions = response.split("\n\n")
-    except Exception as e:
-        questions = ['Sorry, something went wrong. Please, refresh the page.']
+    placement_test_dict[session['user']].append(prompt)
+    response = chatgpt(placement_test_dict[session['user']])
+    placement_test_dict[session['user']].append({"role": "assistant", "content": response})
+    questions = response.split("\n\n")
     return jsonify({"questions": questions})
+
 
 @app.route('/submit-answer', methods=['POST'])
 def submit_answer():
     data = request.get_json()
     answers = data.get('answers')
-    try:
-        placement_test_dict[session['user']].append({"role": "user", "content": 'Berikut jawaban saya untuk section tersebut: ' + answers})
-        response = chatgpt(placement_test_dict[session['user']])
-        placement_test_dict[session['user']].append({"role": "assistant", "content": response})
-        return jsonify({"response": response})
-    except Exception as e:
-        return jsonify({"error": str(e)})
+    placement_test_dict[session['user']].append({"role": "user", "content": prompt.answer_prompt + answers})
+    response = chatgpt(placement_test_dict[session['user']])
+    placement_test_dict[session['user']].append({"role": "assistant", "content": response})
+    return jsonify({"response": response})
 
-@app.route('/result')
-def result():
-    try:
-        placement_test_dict[session['user']].append(prompt.result_prompt)
-        response = chatgpt(placement_test_dict[session['user']])
-        placement_test_dict[session['user']].append({"role": "assistant", "content": response})
-        result = response
-    except Exception as e:
-        result = 'Sorry, something went wrong. Please, refresh the page.'
+
+@app.route('/get-result-test')
+def get_result_test():
+    placement_test_dict[session['user']].append(prompt.result_prompt)
+    response = chatgpt(placement_test_dict[session['user']])
+    placement_test_dict[session['user']].append({"role": "assistant", "content": response})
+    result = response
     return jsonify({"result": result})
+
+
 
 @app.route('/save-result-test', methods=['POST'])
 def save_result_test():
@@ -184,7 +181,9 @@ def save_result_test():
     if user:
         PlacementTest.insert(user['_id'], user['email'], placement_test_dict[session['user']], placement_result, english_level)
         User.update_english_level(user['_id'], english_level)
-    return 'Result test saved successfully!'
+        return 'Success to test save result test!'
+    else:
+        return 'Failed to save result test!'
 
 
 
@@ -194,7 +193,6 @@ def study_plan():
     return render_template('study_plan.html')
 
 
-@app.route('/create-study-plan', methods=['POST'])
 def create_study_plan():
     english_level = request.json['englishLevel']
     goals = request.json['goals']
@@ -203,18 +201,13 @@ def create_study_plan():
     end_date = request.json['endDate']
     days = request.json['days']
     hours = request.json['hours']
-
     plan = prompt.create_study_plan_prompt(english_level, goals, other_goals, start_date, end_date, days, hours)
-
-    try:
-        study_plan_dict[session['user']].append({"role": "user", "content": plan})
-        response = chatgpt(study_plan_dict[session['user']])
-        study_plan_dict[session['user']].append({"role": "assistant", "content": response})
-        study_plan = response
-    except Exception as e:
-        study_plan = 'Sorry, something went wrong. Please, refresh the page.'
-
+    study_plan_dict[session['user']].append({"role": "user", "content": plan})
+    response = chatgpt(study_plan_dict[session['user']])
+    study_plan_dict[session['user']].append({"role": "assistant", "content": response})
+    study_plan = response
     return jsonify({"study_plan": study_plan})
+
 
 
 @app.route('/save-study-plan', methods=['POST'])
@@ -223,7 +216,8 @@ def save_study_plan():
     user = User.get_user(session)
     if user:
         StudyPlan.insert(user['_id'], user['email'], study_plan_dict[session['user']], study_plan_data)
-    return 'Study plan saved successfully!'
+        return 'Suceess to save study plan!'
+    return 'Failed to save study plan!'
 
 
 @app.route('/get-english-level')

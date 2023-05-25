@@ -51,6 +51,8 @@ section3_prompt = {"role": "user", "content": 'Next section 3: Reading and Writi
                    Jangan berikan saya jawabannya. Berikan respon full in English. Gunakan soal TOEFL atau IELTS sebagai referensi \
                    Jika sebelumnya saya sudah meminta soal untuk section ini, dan saya meminta lagi, maka berikan saja soal yang berbeda'}
 
+answer_prompt = 'Berikut jawaban saya untuk section tersebut: '
+
 result_prompt = {"role": "user", "content": 'Berikan result dan feedback dari  ketiga section tersebut. Dan pada bagain akhir, tentukan level kemampuan bahasa inggris dalam CEFR (A1/A2/B1/B2/C1/C2) secara keseluruhan dengann format (Your english level is {user_english_level}). \ Jangan mengatakan (I am sorry, as a language learning system I cannot determine your english level) Berikan saja result berdasarkan jawaban yang saya berikan.'}
 
 

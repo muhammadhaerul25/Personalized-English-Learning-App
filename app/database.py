@@ -1,6 +1,6 @@
 import time
 from pymongo import MongoClient, ASCENDING
-from helpers import english_level_mapping
+from helpers import english_level_mapping, check_content_on_list_of_dict, check_content_on_string
 
 #MONGODB
 client = MongoClient("mongodb://localhost:27017")
@@ -81,7 +81,7 @@ class Learning:
             'email': email,
             'mode': mode,
             'message': message,
-            'response': response,
+            'response': check_content_on_string(response),
             'timestamp': int(time.time()),
             'date': time.strftime("%d/%m/%Y")
         })
@@ -106,7 +106,7 @@ class PlacementTest:
         placements_tests.insert_one({
             'user_id': user_id,
             'email': email,
-            'placement_test_dict': placement_test_dict,
+            'placement_test_dict': check_content_on_list_of_dict(placement_test_dict),
             'placement_result': placement_result,
             'english_level': english_level_mapping(english_level),
             'timestamp': int(time.time()),
@@ -121,9 +121,10 @@ class StudyPlan:
         study_plans.insert_one({
             'user_id': user_id,
             'email': email,
-            'study_plan_dict': study_plan_dict,
+            'study_plan_dict': check_content_on_list_of_dict(study_plan_dict),
             'study_plan': study_plan,
             'timestamp': int(time.time()),
             'date': time.strftime("%d/%m/%Y"),
         })
+
 

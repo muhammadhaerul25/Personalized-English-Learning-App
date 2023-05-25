@@ -12,6 +12,8 @@ def test_questions():
     questions = re.split('\n\n+', text_question)
     return questions
 
+
+# ENGLISH LEVEL FUNCTIONS
 def extract_english_level(result):
     pattern = r'(A1|A2|B1|B2|C1|C3)'
     match = re.search(pattern, result)
@@ -41,3 +43,17 @@ def is_any_english_level(english_level):
     else:
         english_level = f'Your English level is {english_level}.'
     return english_level
+
+
+#CHECK CONTENT FUNCTIONS
+def check_content_on_list_of_dict(list_of_dict):
+    new_list = []
+    for item in list_of_dict:
+        if 'Sorry, something went wrong' not in item['content']:
+            new_list.append(item)
+    return new_list
+
+def check_content_on_string(string):
+    if 'Sorry, something went wrong' in string:
+        return None
+    return string

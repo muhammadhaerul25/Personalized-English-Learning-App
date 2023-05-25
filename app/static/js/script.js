@@ -7,7 +7,6 @@ navLinks.forEach(function(link) {
       link.classList.remove('active');
     });
 
-    // Menambahkan kelas 'active' pada link yang diklik
     this.classList.add('active');
   });
 });
