@@ -1,6 +1,10 @@
 import time
+
 from pymongo import MongoClient, ASCENDING
+ 
+from session import update_tokens_session
 from helpers import english_level_mapping, check_content_on_list_of_dict, check_content_on_string
+from config import INITIAL_TOKENS, UPDATE_TOKENS, MAX_TOKENS
 
 #MONGODB
 client = MongoClient("mongodb://localhost:27017")
@@ -12,11 +16,13 @@ study_plans = db['study_plans']
 
 
 class User:
-    def __init__(self, name=None, email=None, password=None, english_level='Unknown'):
+    def __init__(self, name=None, email=None, password=None, english_level='Unknown', tokens_had=INITIAL_TOKENS, tokens_used=0):
         self.name = name
         self.email = email
         self.password = password
         self.english_level = english_level
+        self.tokens_had = tokens_had
+        self.tokens_used = tokens_used
  
 
     def is_email_registered(self):
@@ -28,6 +34,8 @@ class User:
             "email": self.email,
             "password": self.password,
             "english_level": self.english_level,
+            'tokens_had': self.tokens_had,
+            'tokens_used': self.tokens_used,
             'timestamp': int(time.time()),
             'joined_date': time.strftime("%d/%m/%Y")
         })
@@ -46,6 +54,7 @@ class User:
             return existing_user, {"message": "Invalid email or password"}, 401
         return existing_user, {"message": "Login successful"}, 200
     
+    #GETTERS
     @staticmethod
     def get_user(session):
         user_id = session.get('user')
@@ -55,22 +64,46 @@ class User:
             return None
     
     @staticmethod
-    def get_name(id):
-        user_data = users.find_one({"_id": id})
+    def get_name(user_id):
+        user_data = users.find_one({"_id": user_id})
         if user_data:
             return user_data.get("name")
         return None
 
     @staticmethod
-    def get_english_level(id):
-        user_data = users.find_one({"_id": id})
+    def get_english_level(user_id):
+        user_data = users.find_one({"_id": user_id})
         if user_data:
             return user_data.get("english_level")
         return None
     
     @staticmethod
-    def update_english_level(id, english_level):
-        users.update_one({'_id': id}, {'$set': {'english_level': english_level_mapping(english_level)}})
+    def get_tokens_used(user_id):
+        user_data = users.find_one({"_id": user_id})
+        if user_data:
+            return user_data.get("tokens_used")
+        return 0
+    
+    def get_tokens_had(user_id):
+        user_data = users.find_one({"_id": user_id})
+        if user_data:
+            return user_data.get("tokens_had")
+        return 0
+    
+
+    #UPDATERS
+    @staticmethod
+    def update_english_level(user_id, english_level):
+        users.update_one({'_id': user_id}, {'$set': {'english_level': english_level_mapping(english_level)}})
+
+    @staticmethod
+    def update_tokens_used(user_id, tokens_used):
+        users.update_one({'_id': user_id}, {'$set': {'tokens_used': tokens_used}})
+    
+    @staticmethod
+    def update_tokens_had(user_id, tokens_had):
+        users.update_one({'_id': user_id}, {'$set': {'tokens_had': tokens_had}})
+
 
 
 class Learning:
@@ -128,3 +161,17 @@ class StudyPlan:
         })
 
 
+def update_tokens_periodically():
+    all_users = users.find()
+    for user in all_users:
+        tokens_had = user["tokens_had"]
+        if tokens_had < MAX_TOKENS:
+            tokens_to_add = UPDATE_TOKENS
+            new_tokens_had = tokens_had + tokens_to_add
+            if new_tokens_had > MAX_TOKENS:
+                new_tokens_had = MAX_TOKENS
+            users.update_one(
+                {"_id": user["_id"]},
+                {"$set": {"tokens_had": new_tokens_had}}
+            )
+            update_tokens_session(user["_id"], new_tokens_had, user["tokens_used"])

@@ -1,16 +1,21 @@
+#MODULES
+import time
+import threading
+
 #PACKAGES
 from flask import Flask, request
 from flask import render_template, jsonify, redirect, url_for
+import schedule
 
 #FILES
 import prompts as prompt
 from session import session, pronunciation_dict, context_dict, reading_dict, placement_test_dict, study_plan_dict
-from session import configure_session, create_session, check_session, delete_session, check_prompt_session, recreate_placement_test_prompt_session 
+from session import configure_session, configure_sesion_name,create_session, check_session, delete_session, check_prompt_session, recreate_placement_test_prompt_session, recreate_study_plan_prompt_session 
 from models import chatgpt
-from database import User, Learning, PlacementTest, StudyPlan
+from database import User, Learning, PlacementTest, StudyPlan, update_tokens_periodically
 
-from config import MESSAGES
-from helpers import extract_english_level, is_any_english_level 
+from config import MESSAGES, TIME_OF_TOKENS_UPDATE
+from helpers import extract_english_level, is_any_english_level, cut_messages 
 
 
 #FLASK-APP
@@ -54,6 +59,7 @@ def login():
     existing_user, response, status = user.login()
     if status == 200:
         create_session(existing_user)
+        configure_sesion_name(app, existing_user['_id'])
     return jsonify(response), status
 
 @app.route('/logout')
@@ -103,6 +109,7 @@ def get_response(mode, message):
         chat_dict = reading_dict[session["user"]]
     if chat_dict:
         chat_dict.append({"role": "user", "content": message})
+        chat_dict = cut_messages(chat_dict) #cut messages for request to chatgpt
         response = chatgpt(chat_dict)
         chat_dict.append({"role": "assistant", "content": response})
     else:
@@ -133,7 +140,7 @@ def placement_result():
 
 @app.route('/section1')
 def section1():
-    recreate_placement_test_prompt_session(session['user'], User.get_user(session))
+    recreate_placement_test_prompt_session(User.get_user(session))
     return get_questions(prompt.section1_prompt)
 
 @app.route('/section2')
@@ -180,7 +187,8 @@ def save_result_test():
     user = User.get_user(session)
     if user:
         PlacementTest.insert(user['_id'], user['email'], placement_test_dict[session['user']], placement_result, english_level)
-        User.update_english_level(user['_id'], english_level)
+        if english_level != None:
+            User.update_english_level(user['_id'], english_level)
         return 'Success to test save result test!'
     else:
         return 'Failed to save result test!'
@@ -193,7 +201,9 @@ def study_plan():
     return render_template('study_plan.html')
 
 
+@app.route('/create-study-plan', methods=['POST'])
 def create_study_plan():
+    recreate_study_plan_prompt_session(User.get_user(session))
     english_level = request.json['englishLevel']
     goals = request.json['goals']
     other_goals = request.json['otherInput']
@@ -228,7 +238,21 @@ def get_english_level():
     return jsonify({'englishLevel': english_level})
 
    
+def schedule_loop():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
 
 
 if __name__ == '__main__':
+    #UPDATE DATABASE
+    schedule.every(TIME_OF_TOKENS_UPDATE).minutes.do(update_tokens_periodically)
+
+    #RUN SCHEDULER
+    scheduler_thread = threading.Thread(target=lambda: schedule_loop())
+    scheduler_thread.start()
+
+    #RUN FLASK APP
     app.run(debug=True)
+

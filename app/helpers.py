@@ -57,3 +57,9 @@ def check_content_on_string(string):
     if 'Sorry, something went wrong' in string:
         return None
     return string
+
+#MESSAGES FUNCTIONS
+def cut_messages(messages):
+    if len(messages) > 15:
+        messages = messages[-15:]
+    return messages

@@ -17,7 +17,7 @@ const pronunciationDropdownOptions = `
   <option value="Write a conversation about ...">Write a conversation about ...</option>
   <option value="Write a conversation between ...">Write a conversation between ...</option>
   <option value="Let's simulate an interview for">Let's simulate a interview for</option>
-  <option value="Let's practice">Let's practice</option>
+  <option value="Let's practice for pronunciation, speaking, and conversation. You will give me a question by question and I will answer it, then grade my answer and move to another questions">Let's practice</option>
   <option value="Give me feedbacks">Give me feedbacks</option>
 `;
 
@@ -33,7 +33,7 @@ const contextDropdownOptions = `
   <option value="Write sentences using ...">Write sentences using ...</option>
   <option value="Correct my grammar mistakes in the following text: ...">Correct my grammar mistakes in the following text: ...</option>
   <option value="Write sentences using ...">Write sentences using ...</option>
-  <option value="Let's practice">Let's practice</option>
+  <option value="Let's practice for context, vocabular, and grammar. You will give me a question by question and I will answer it, then grade my answer and move to another questions">Let's practice</option>
   <option value="Give me feedbacks">Give me feedbacks</option>
 `;
 
@@ -50,7 +50,7 @@ const readingDropdownOptions = `
   <option value="Beautify this text: ...">Beautify this text: ...</option>
   <option value="Summarize this text: ...">Summarize this text: ...</option>
   <option value="Conclude this text: ...">Conclude this text: ...</option>
-  <option value="Let's practice">Let's practice</option>
+  <option value="Let's practice for reading and writing. You will give me a question by question and I will answer it, then grade my answer and move to another questions">Let's practice</option>
   <option value="Give me feedbacks">Give me feedbacks</option>
 `;
 

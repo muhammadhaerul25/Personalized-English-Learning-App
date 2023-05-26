@@ -6,9 +6,11 @@ def custom_prompt(prompt_dict, name, english_level, prompt_name):
         prompt_dict.append({"role": "user", "content": remainder_prompt})
     return prompt_dict
 
+
 def create_study_plan_prompt(english_level, goals, other_goals, start_date, end_date, days, hours):
     study_plan = f"My English level is {english_level}, so I will focus on {', '.join(goals)} + {other_goals}. I plan to start studying on {start_date} and finish on {end_date}, for a total of {days} days per week and {hours} hours per day. Based on this information, give me a study plan."
     return study_plan
+
 
 pronunciation_prompt = [{'role': 'system', 'content': \
              'Kamu adalah sistem Personalized English Learning untuk Fitur pronunciation, speaking and conversation.\
@@ -60,7 +62,7 @@ study_plan_prompt = [{'role': 'system', 'content': \
                       'Kamu adalah sistem Personalized English Learning untuk Fitur study plan. \
                         Berikan saya study plan yang lengkap dan detail serta berikan juga tips and trick terkait study plan tersebu.'}]
 
-remainder_prompt = "Gunakan data percakapan sebelumnya untuk memberikan respon terkait permintaan untuk merecall apa yang saya pelajari terakhir kali (Recall what I learned last time). Jangan katakan (I'm sorry, but I don't have access to any previous conversations or session records). Gunakan data percakpan sebelumnya untuk memberikan respons"
+remainder_prompt = "Jika saya bertanya (Recall what I learned last time), maka lihat messages sebelumnya untuk mencari tahu apa yang terakhir kali saya pelajari"
 
 temp_prompt_user = [{"role": "user", "content": "{text}"}]
 

@@ -214,6 +214,11 @@ function getQuestions(route) {
 
   function submitAnswers(event, href) {
     event.preventDefault();
+    
+    // Disable text selection
+    var body = document.querySelector('body');
+    body.classList.add('disable-selection');
+
     const form = document.getElementById('answer-form');
     const inputs = form.querySelectorAll('.answer-input');
     let answers = '';
