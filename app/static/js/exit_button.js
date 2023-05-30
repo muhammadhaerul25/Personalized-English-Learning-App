@@ -9,7 +9,7 @@ exitButton.addEventListener('click', function() {
 });
 
 alertExitOkButton.addEventListener('click', function() {
-  window.location.href = "/";
+  window.location.href = "/#main";
 });
 
 alertExitCancelButton.addEventListener('click', function() {

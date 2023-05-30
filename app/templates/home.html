@@ -10,27 +10,64 @@
 
 
 {% block content %}
-<main>
-	<div class="container">
-		<div class="card">
-			<h2>Learning</h2>
-			<p>Welcome to Personalized English Learning. <br> Learning with Artificial Intelligence to help you improve your English skills.</p>
-			<a href="learning" class="button">Start Learning</a>
-		</div>
-		<div class="card-container">
-			<div class="card">
-				<h2>Placement Test</h2>
-				<p>Determine your current English level with our online placement test.</p>
-				<a href="placement-test">Take Test</a>
+
+<!--==========================
+    Intro Section
+  ============================-->
+  <section id="intro">
+
+    <div class="intro-content">
+      <h2>Welcome to Personalized English Learning!
+		<br><span>Learning with Artificial Intelligence to help you improve your English skills</span></h2>
+      <div>
+      </div>
+    </div>
+
+    <div id="intro-carousel" class="owl-carousel" >
+      <div class="item" style="background-image: url('img/intro-carousel/1.jpg');"></div>
+      <div class="item" style="background-image: url('img/intro-carousel/2.jpg');"></div>
+      <div class="item" style="background-image: url('img/intro-carousel/3.jpg');"></div>
+      <div class="item" style="background-image: url('img/intro-carousel/4.jpg');"></div>
+      <div class="item" style="background-image: url('img/intro-carousel/5.jpg');"></div>
+    </div>
+
+  </section><!-- #intro -->
+
+<main id="main">
+	<!--==========================
+      Services Section
+    ============================-->
+    <section id="services" class="wow fadeInUp">
+		<div class="container">
+		  <div class="section-header">
+			<h2>Features</h2>
+			<p>Sed tamen tempor magna labore dolore dolor sint tempor duis magna elit veniam aliqua esse amet veniam enim export quid quid veniam aliqua eram noster malis nulla duis fugiat culpa esse aute nulla ipsum velit export irure minim illum fore</p>
+			<div id="features-container">
+				<div id="features-card" class="card">
+					<h3>Learning</h3>
+					<p>Welcome to Personalized English Learning. <br> Learning with Artificial Intelligence to help you improve your English skills.</p>
+					<a id="btn-learning" href="learning" class="button">Start Learning</a>
+				</div>
+				<div class="card-container">
+					<div class="card">
+						<h3>Placement Test</h3>
+						<p>Determine your current English level with our online placement test.</p>
+						<a href="placement-test">Take Test</a>
+					</div>
+					<div class="card">
+						<h3>Study Plan</h3>
+						<p>Create a personalized study plan based on your level, goals, schedule.</p>
+						<a href="study-plan">Create Plan</a>
+					</div>
+				</div>
 			</div>
-			<div class="card">
-				<h2>Study Plan</h2>
-				<p>Create a personalized study plan based on your level, goals, schedule.</p>
-				<a href="study-plan">Create Plan</a>
-			</div>
+		  </div>
+  
 		</div>
-	</div>
+	  </section>
+	  <!-- #services -->
 </main>
+
 {% endblock %}
 
 

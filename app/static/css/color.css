@@ -1,8 +1,9 @@
-/* 
+:root {
+    --green: #74AA9C;
+    --light-green: #dcf6e8;
+    --middle-green: #0c8a7a;
+    --dark-green: #0e4135;
 
-Green color theme: #74AA9C;
-light-green: #dcf6e8;
-dark-green: #0e4135;
-
-
-*/
+    --red: #e63946;
+    --dark-red: #c40233;
+  }

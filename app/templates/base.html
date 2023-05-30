@@ -1,31 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}{% endblock %}</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <title>Personalized English Learning</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    {% block head %}{% endblock %}
+  <!-- Favicons -->
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+  <link href="{{ url_for('static', filename='img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800|Montserrat:300,400,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}">
+
+  <!-- Libraries CSS Files -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/font-awesome/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/ionicons/css/ionicons.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/magnific-popup/magnific-popup.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='lib/ionicons/css/ionicons.min.css') }}">
+
+
+  <!-- Main Stylesheet File -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/temp_style.css') }}">
+  {% block head %}{% endblock %}
+
+
+  <!-- =======================================================
+    Theme Name: Reveal
+    Theme URL: https://bootstrapmade.com/reveal-bootstrap-corporate-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
 </head>
+
+
 <body id="base-body">
 
-    <!-- Header -->
-    <header id="base-header">
-		<div id="base-navbar" class="navbar">
-		  <ul id="base-nav-list" class="nav-list">
-			<li id="base-nav-item" class="nav-item"><a id="home-link" href="/" class="nav-link">Home</a></li>
-			<li id="base-nav-item" class="nav-item"><a id="profile-link" href="/profile" class="nav-link">Profile</a></li>
-			<li id="base-nav-item" class="nav-item"><a id="about-link" href="/about" class="nav-link">About</a></li>
-			<li id="base-nav-item" class="nav-item"><a id="contact-link" href="/contact" class="nav-link">Contact</a></li>
-		  </ul>
-          <button id="logout-button" class="logout-button">Logout</button>
-		</div>
-		<h1 id="pel-letter">
-      Personalized English Learning
-    </h1>
+    <!--==========================
+      Header
+    ============================-->
+    <header id="header">
+      <div class="container">
 
-	</header>
+        <div id="logo" class="pull-left">
+          <h1><a href="/" class="scrollto">E-PEL</a></h1>
+          <!-- Uncomment below if you prefer to use an image logo -->
+          <!-- <a href="#body"><img src="img/logo.png" alt="" title="" /></a>-->
+        </div>
+
+        <nav id="nav-menu-container">
+          <ul class="nav-menu">
+            <li><a id='home-link' href="home">Home</a></li>
+            <li><a id='profile-link' href="profile">Profile</a></li>
+            <li><a id='about-link' href="about">About Us</a></li>
+            <li><a id='contact-link' href="contact">Contact</a></li>
+            <li><a href="registration"><button id="login-button" class="login-button">Login</button></a></li>
+            <li><a href="#"><button id="logout-button" class="logout-button">Logout</button></a></li>
+          </ul>
+        </nav><!-- #nav-menu-container -->
+      </div>
+    </header><!-- #header -->
 
     <div id="alert-dialog" class="hide">
         <div id="alert-message">Are you sure you want to log out?</div>
@@ -36,18 +76,54 @@
     </div>
 
 
+
     {% block content %}{% endblock %}
 
-      <!-- Footer -->
-    <footer id="base-footer">
-      <p>Copyright ©2023 Intern ChatGPT Team at The Ditjen Diktiristek 
-        <br>
-        MSIB Batch 5, Year 2023
-      </p>
-    </footer>
 
 
+    <!--==========================
+      Footer
+    ============================-->
+    <footer id="footer">
+      <div class="container">
+        <div class="copyright">
+          &copy; Copyright <strong>Reveal</strong>. All Rights Reserved
+        </div>
+        <div class="credits">
+          <!--
+            All the links in the footer should remain intact.
+            You can delete the links only if you purchased the pro version.
+            Licensing information: https://bootstrapmade.com/license/
+            Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Reveal
+          -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </footer><!-- #footer -->
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+
+
+    <!-- JavaScript Libraries -->
+    <script src="{{ url_for('static', filename='lib/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/jquery/jquery-migrate.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/superfish/hoverIntent.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/superfish/superfish.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/magnific-popup/magnific-popup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='lib/sticky/sticky.js') }}"></script>
+
+    <!-- Contact Form JavaScript File -->
+    <script src="{{ url_for('static', filename='contactform/contactform.js') }}"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="{{ url_for('static', filename='js/temp_script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
     {% block scripts %} \{% endblock %}
 	
 </body>
