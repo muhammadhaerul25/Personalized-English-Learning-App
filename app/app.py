@@ -12,14 +12,14 @@ import prompts as prompt
 from session import session, pronunciation_dict, context_dict, reading_dict, placement_test_dict, study_plan_dict
 from session import configure_session, configure_sesion_name,create_session, check_session, delete_session, check_prompt_session, recreate_placement_test_prompt_session, recreate_study_plan_prompt_session 
 from models import chatgpt
-from database import User, Learning, PlacementTest, StudyPlan, update_tokens_periodically
+from database import User, Learning, PlacementTest, StudyPlan
 
 from config import MESSAGES, TIME_OF_TOKENS_UPDATE
 from helpers import extract_english_level, is_any_english_level, cut_messages 
 
 
 #FLASK-APP
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
 #FLASK-SESSION
 configure_session(app)
@@ -34,10 +34,45 @@ def require_login():
     if not check_prompt_session():
         logout()
 
+#PAGES
 @app.route('/')
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+@app.route('/profile')
+def profile():
+    user = User.get_user(session)
+    name = user['name']
+    english_level = user['english_level'].replace(' ', '<br>', 1) if user['english_level'] else 'Not Available'
+    email = user['email']
+    phone = user['phone']
+    joined_date = user['joined_date']
+    tokens_had = user['tokens_had']
+    tokens_used = user['tokens_used']
+
+    placement_test_history = PlacementTest.get_placement_test(user['_id'])
+    placement_test_date = placement_test_history['date'] if placement_test_history else 'Not Available'
+    placement_test_english_level = placement_test_history['english_level'] if placement_test_history else 'Not Available'
+    placement_test_result = placement_test_history['placement_result'] if placement_test_history else 'Not Available'
+
+    study_plan_history = StudyPlan.get_study_plan(user['_id'])
+    study_plan_date = study_plan_history['date'] if study_plan_history else 'Not Available'
+    study_plan = study_plan_history['study_plan'] if study_plan_history else 'Not Available'
+
+    return render_template('profile.html', name=name, english_level=english_level, email=email, phone=phone, 
+                           joined_date=joined_date, tokens_had=tokens_had, tokens_used=tokens_used,
+                           placement_test_date=placement_test_date, placement_test_english_level=placement_test_english_level, placement_test_result=placement_test_result,
+                           study_plan_date=study_plan_date, study_plan=study_plan)
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 
 #REGISTRATION    
@@ -247,7 +282,7 @@ def schedule_loop():
 
 if __name__ == '__main__':
     #UPDATE DATABASE
-    schedule.every(TIME_OF_TOKENS_UPDATE).minutes.do(update_tokens_periodically)
+    schedule.every(TIME_OF_TOKENS_UPDATE).hour.do(User.update_tokens_periodically)
 
     #RUN SCHEDULER
     scheduler_thread = threading.Thread(target=lambda: schedule_loop())

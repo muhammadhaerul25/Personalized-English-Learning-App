@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <div id="profile-card" class="card">
+        <div class="container-left">
+            <div class="centered-content">
+                <div class="profile-photo">
+                    <img src="{{ url_for('static', filename='img/profile_icon.png') }}" alt="Profile Photo">
+                </div>
+                <div class="profile-details">
+                    <h2>{{ name }}</h2>
+                    <p class="english-level">{{ english_level|safe }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="container-right">
+            <section class="account-section">
+                <h3>Account:</h3>
+                <p>Email: {{ email }}</p>
+                <p>Phone: {{ phone }}</p>
+                <p>Joined Date: {{ joined_date }}</p>
+            </section>
+            <section class="tokens-section">
+                <h3>Tokens:</h3>
+                <p>Tokens Had: {{ tokens_had }}</p>
+                <p>Tokens Used: {{ tokens_used }}</p>
+                <p><small class="note"><em>Note: 
+                    <br> - You are using tokens to learn with AI 
+                    <br> - You will get free 10k tokens per hour up to 100k tokens
+                    </em></small>
+                </p>
+            </section>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="container">
+            <h3>Placement Test History:</h3>
+            <div class="bubble-container">
+                <div class="bubble">
+                    <p>
+                        Date: {{ placement_test_date }} 
+                        <br> English Level: {{ placement_test_english_level }}
+                    </p>
+                    <p>{{ placement_test_result|safe }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="container">
+            <h3>Study Plan History:</h3>
+            <div class="bubble-container">
+                <div class="bubble">
+                    <p>Date: {{ study_plan_date }}</p>
+                    <p>{{ study_plan|safe }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}

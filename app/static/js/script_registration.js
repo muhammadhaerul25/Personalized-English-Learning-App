@@ -126,3 +126,16 @@ formLogin.addEventListener("submit", (event) => {
 
 });
 
+
+const switchLoginButton = document.getElementById('switch-login');
+const switchRegisterButton = document.getElementById('switch-register');
+const signInContainer = document.querySelector('.sign-in-container');
+const signUpContainer = document.querySelector('.sign-up-container');
+
+switchLoginButton.addEventListener('click', () => {
+  container.classList.remove('right-panel-active');
+});
+
+switchRegisterButton.addEventListener('click', () => {
+  container.classList.add('right-panel-active');
+});

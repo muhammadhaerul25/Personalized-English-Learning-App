@@ -1,61 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Personalized English Learning</title>
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% extends "base.html" %}
+
+{% block title %}
+    Personalized English Learning
+{% endblock %}\
+
+{% block head %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
-    
-</head>
-<body>
-	<header>
-		<div class="navbar">
-		  <ul id="nav-list" class="nav-list">
-			<li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
-			<li class="nav-item"><a href="#" class="nav-link">Profile</a></li>
-			<li class="nav-item"><a href="#" class="nav-link right">About Us</a></li>
-			<li class="nav-item"><a href="#" class="nav-link right">Contact</a></li>
-		  </ul>
-          <button id="logout-button" class="logout-button">Logout</button>
-		</div>
-		<h1 id="pel-letter">Personalized English Learning</h1>
-	  </header>
+{% endblock %}
 
-	  <div id="alert-dialog" class="hide">
-		<div id="alert-message">Are you sure you want to log out?</div>
-		<div id="alert-buttons">
-		  <button id="alert-ok">Yes</button>
-		  <button id="alert-cancel">Cancel</button>
+
+{% block content %}
+<main>
+	<div class="container">
+		<div class="card">
+			<h2>Learning</h2>
+			<p>Welcome to Personalized English Learning. <br> Learning with Artificial Intelligence to help you improve your English skills.</p>
+			<a href="learning" class="button">Start Learning</a>
 		</div>
-	  </div>
-	  
-	<main>
-		<div class="container">
+		<div class="card-container">
 			<div class="card">
-				<h2>Learning</h2>
-				<p>Welcome to Personalized English Learning. <br> We offer a variety of resources using Artificial Intelligence to help you improve your English skills.</p>
-				<a href="learning" class="button">Start Learning</a>
+				<h2>Placement Test</h2>
+				<p>Determine your current English level with our online placement test.</p>
+				<a href="placement-test">Take Test</a>
 			</div>
-			<div class="card-container">
-				<div class="card">
-					<h2>Placement Test</h2>
-					<p>Determine your current English level with our online placement test.</p>
-					<a href="placement-test">Take Test</a>
-				</div>
-				<div class="card">
-					<h2>Study Plan</h2>
-					<p>Create a personalized study plan based on your level, goals, schedule.</p>
-					<a href="study-plan">Create Plan</a>
-				</div>
+			<div class="card">
+				<h2>Study Plan</h2>
+				<p>Create a personalized study plan based on your level, goals, schedule.</p>
+				<a href="study-plan">Create Plan</a>
 			</div>
 		</div>
-	</main>
+	</div>
+</main>
+{% endblock %}
 
-	<footer>
-		<p>Copyright © 2023 Personalized English Learning</p>
-	  </footer>
-	
+
+{% block scripts %}
 	<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
-</html>
+{% endblock %}
+

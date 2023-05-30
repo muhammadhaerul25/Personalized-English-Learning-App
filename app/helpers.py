@@ -39,7 +39,7 @@ def english_level_mapping(english_level):
 
 def is_any_english_level(english_level):
     if english_level == 'Unknown' or english_level == None or english_level == '':
-        english_level = f"Your English level is currently unknown. For the best learning experience, I recommend you to take a placement test first."
+        english_level = f"Your English level is currently unknown. <br> For the best learning experience, I recommend you to take a placement test first."
     else:
         english_level = f'Your English level is {english_level}.'
     return english_level
@@ -59,7 +59,7 @@ def check_content_on_string(string):
     return string
 
 #MESSAGES FUNCTIONS
-def cut_messages(messages):
-    if len(messages) > 15:
-        messages = messages[-15:]
+def cut_messages(messages, max_length=30):
+    if len(messages) > max_length:
+        messages = messages[-max_length:]
     return messages

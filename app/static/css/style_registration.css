@@ -247,30 +247,6 @@ input:focus {
 	width: 40px;
 }
 
-footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
-}
 
 #error-register {
     display: none;
@@ -291,3 +267,67 @@ footer a {
   input:-webkit-autofill {
     background-color: #b4cdc6;
   }
+
+
+
+
+  @media (max-width: 768px) {
+	.container {
+	  flex-direction: column;
+	  height: auto;
+	}
+  
+	.form-container {
+	  margin-top: 30px;
+	  margin-bottom: 30px;
+	  width: 100%;
+	  height: auto;
+	  position: static;
+	  opacity: 1;
+	  z-index: 5;
+	  transform: none;
+	  transition: none;
+	}
+  
+	.sign-up-container {
+	  padding-top: 0;
+	}
+  
+	.overlay-container {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	  width: 100%;
+	  height: auto;
+	  position: static;
+	  opacity: 1;
+	  z-index: 5;
+	  transform: none;
+	  transition: none;
+	}
+  
+	.overlay-panel {
+	  width: 100%;
+	  transform: none;
+	  transition: none;
+	}
+  
+	.overlay {
+	  transform: translateX(0) !important;
+	}
+  
+	.container.right-panel-active .overlay {
+	  transform: translateX(100%) !important;
+	}
+  }
+  
+
+  
+
+  
+  
+  
+
+  
+  
+  

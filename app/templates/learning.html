@@ -21,15 +21,15 @@
         
         <div class="conversation-container">
           <div class="conversation active" id="pronunciation">
-            <div class="message bot">Hi {{name}}! {{english_level}}</div>
+            <div class="message bot">Hi {{name}}! {{english_level|safe}}</div>
             <div class="message bot">Welcome to Pronunciation, Speaking, and Conversation mode!<br>How can I assist you today?</div>
           </div>
           <div class="conversation" id="context">
-            <div class="message bot">Hi {{name}}! {{english_level}}</div>
+            <div class="message bot">Hi {{name}}! {{english_level|safe}}</div>
             <div class="message bot">Welcome to Context, Vocabulary, and Grammar mode!<br>How can I assist you today?</div>
           </div>
           <div class="conversation" id="reading">
-            <div class="message bot">Hi {{name}}! {{english_level}}</div>
+            <div class="message bot">Hi {{name}}! {{english_level|safe}}</div>
             <div class="message bot">Welcome to Reading and Writing mode!<br>How can I assist you today?</div>
           </div>
           <div class="loader-container"></div>

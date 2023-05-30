@@ -1,17 +1,3 @@
-var navLinks = document.querySelectorAll('.nav-link');
-
-navLinks.forEach(function(link) {
-  link.addEventListener('click', function() {
-    // Menghapus kelas 'active' dari semua link
-    navLinks.forEach(function(link) {
-      link.classList.remove('active');
-    });
-
-    this.classList.add('active');
-  });
-});
-
-
 const logoutButton = document.getElementById('logout-button');
 const alertDialog = document.getElementById('alert-dialog');
 const alertOkButton = document.getElementById('alert-ok');

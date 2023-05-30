@@ -103,7 +103,6 @@ def create_tokens_session(user):
     tokens_used_dict[user_id] = user['tokens_used']
 
 
-
 def update_tokens_session(user_id, new_tokens_had, new_tokens_used):
     tokens_had_dict[user_id] = new_tokens_had
     tokens_used_dict[user_id] = new_tokens_used

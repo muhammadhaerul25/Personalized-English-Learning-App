@@ -4,7 +4,7 @@ from pymongo import MongoClient, ASCENDING
  
 from session import update_tokens_session
 from helpers import english_level_mapping, check_content_on_list_of_dict, check_content_on_string
-from config import INITIAL_TOKENS, UPDATE_TOKENS, MAX_TOKENS
+from config import INITIAL_TOKENS, UPDATE_TOKENS, MAX_UPDATE_TOKENS
 
 #MONGODB
 client = MongoClient("mongodb://localhost:27017")
@@ -16,9 +16,10 @@ study_plans = db['study_plans']
 
 
 class User:
-    def __init__(self, name=None, email=None, password=None, english_level='Unknown', tokens_had=INITIAL_TOKENS, tokens_used=0):
+    def __init__(self, name=None, email=None, phone=None, password=None, english_level='Unknown', tokens_had=INITIAL_TOKENS, tokens_used=0):
         self.name = name
         self.email = email
+        self.phone = phone
         self.password = password
         self.english_level = english_level
         self.tokens_had = tokens_had
@@ -32,6 +33,7 @@ class User:
         users.insert_one({
             "name": self.name,
             "email": self.email,
+            "phone": self.phone,
             "password": self.password,
             "english_level": self.english_level,
             'tokens_had': self.tokens_had,
@@ -104,6 +106,22 @@ class User:
     def update_tokens_had(user_id, tokens_had):
         users.update_one({'_id': user_id}, {'$set': {'tokens_had': tokens_had}})
 
+    @staticmethod
+    def update_tokens_periodically():
+        all_users = users.find()
+        for user in all_users:
+            tokens_had = user["tokens_had"]
+            if tokens_had < MAX_UPDATE_TOKENS:
+                tokens_to_add = UPDATE_TOKENS
+                new_tokens_had = tokens_had + tokens_to_add
+                if new_tokens_had > MAX_UPDATE_TOKENS:
+                    new_tokens_had = MAX_UPDATE_TOKENS
+                users.update_one(
+                    {"_id": user["_id"]},
+                    {"$set": {"tokens_had": new_tokens_had}}
+                )
+                update_tokens_session(user["_id"], new_tokens_had, user["tokens_used"])
+
 
 
 class Learning:
@@ -145,6 +163,13 @@ class PlacementTest:
             'timestamp': int(time.time()),
             'date': time.strftime("%d/%m/%Y"),
         })
+    
+    @staticmethod
+    def get_placement_test(user_id):
+        placement_test = placements_tests.find_one({'user_id': user_id}, sort=[('_id', -1)])
+        if placement_test:
+            return placement_test
+        return None
 
 
 
@@ -159,19 +184,11 @@ class StudyPlan:
             'timestamp': int(time.time()),
             'date': time.strftime("%d/%m/%Y"),
         })
+        
+    @staticmethod
+    def get_study_plan(user_id):
+        study_plan = study_plans.find_one({'user_id': user_id}, sort=[('_id', -1)])
+        if study_plan:
+            return study_plan
+        return None
 
-
-def update_tokens_periodically():
-    all_users = users.find()
-    for user in all_users:
-        tokens_had = user["tokens_had"]
-        if tokens_had < MAX_TOKENS:
-            tokens_to_add = UPDATE_TOKENS
-            new_tokens_had = tokens_had + tokens_to_add
-            if new_tokens_had > MAX_TOKENS:
-                new_tokens_had = MAX_TOKENS
-            users.update_one(
-                {"_id": user["_id"]},
-                {"$set": {"tokens_had": new_tokens_had}}
-            )
-            update_tokens_session(user["_id"], new_tokens_had, user["tokens_used"])
