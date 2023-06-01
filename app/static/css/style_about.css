@@ -1,0 +1,24 @@
+#about-link {
+    color: #0c8a7a;
+}
+
+#team-intro {
+    font-style: normal; 
+    text-align: justify;
+}
+
+#team-text {
+    font-style: normal;
+}
+
+.span-role {
+    font-style: normal;
+}
+
+#row-mentor {
+    margin-top: -50px;
+}
+
+#row-intern {
+    margin-bottom: 20px;
+}

@@ -247,6 +247,10 @@ filter: brightness(70%);
   .container {
     max-width: 90%;
   }
+
+  .test-container {
+    height: 450px;
+  }
 }
 
 

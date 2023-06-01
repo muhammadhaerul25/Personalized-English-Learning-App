@@ -242,7 +242,55 @@ select option:checked {
   }
 }
 
+/* For screens smaller than 768px */
+@media only screen and (max-width: 768px) {
+  main {
+    padding: 15px;
+  }
 
+  .container {
+    max-width: 90%;
+  }
+
+  .plan-container {
+    overflow-y: unset;
+    max-height: unset;
+  }
+
+  .bubble {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .loader-container {
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .form-container {
+    flex-direction: column;
+  }
+
+  .left-input,
+  .right-input {
+    margin: auto;
+    margin-bottom: 10px;
+  }
+
+  #submit-button {
+    float: none;
+    margin-top: 20px;
+  }
+
+  #save-button {
+    float: none;
+    margin-bottom: 20px;
+  }
+
+  #success-container {
+    flex-direction: column;
+  }
+}
 
 
 

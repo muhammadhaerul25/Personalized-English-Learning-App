@@ -3,10 +3,10 @@ import tiktoken
 
 from session import session, tokens_used_dict, tokens_had_dict
 from database import User
-from config import API_KEY, MODEL, MESSAGES
+from config import OPENAI_API_KEY, MODEL, MESSAGES
 
 
-openai.api_key = API_KEY
+openai.api_key = OPENAI_API_KEY
 
 
 #MODELS

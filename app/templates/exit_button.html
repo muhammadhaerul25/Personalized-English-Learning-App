@@ -1,0 +1,107 @@
+<button id="exit-button" class="exit-button">Exit</button>
+<div id="alert-exit-dialog" class="hide">
+  <div id="alert-exit-message">Are you sure you want to exit?</div>
+  <div id="alert-exit-buttons">
+    <button id="alert-exit-ok">Yes</button>
+    <button id="alert-exit-cancel">Cancel</button>
+  </div>
+</div>
+
+
+<style>
+/* Style for the exit button */
+.exit-button {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #e63946;
+    border: none;
+    color: white;
+    padding: 6px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .exit-button:hover {
+    background-color: #c40233;
+  }
+  
+  
+  #alert-exit-dialog {
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    width: 250px;
+    height: auto;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 1;
+    margin-bottom: 10px;
+  }
+  
+  
+  #alert-exit-message {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  #alert-exit-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #alert-exit-ok {
+    background-color: #e63946;
+    font-size: 12px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+  
+  #alert-exit-cancel {
+    background-color: #CCCCCC;
+    font-size: 12px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  #alert-exit-buttons button:hover {
+    filter: brightness(70%);
+  }
+  
+  .hide {
+    display: none;
+  }  
+</style>
+
+
+
+<script>
+// exit button
+const exitButton = document.getElementById('exit-button');
+const alertExitDialog = document.getElementById('alert-exit-dialog');
+const alertExitOkButton = document.getElementById('alert-exit-ok');
+const alertExitCancelButton = document.getElementById('alert-exit-cancel');
+
+exitButton.addEventListener('click', function() {
+  alertExitDialog.classList.remove('hide');
+});
+
+alertExitOkButton.addEventListener('click', function() {
+  window.location.href = "/#main";
+});
+
+alertExitCancelButton.addEventListener('click', function() {
+  alertExitDialog.classList.add('hide');
+});
+</script>

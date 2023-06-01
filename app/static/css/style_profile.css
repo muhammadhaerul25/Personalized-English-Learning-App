@@ -40,7 +40,7 @@
 }
 
 #user-name {
-    color: black;
+    color: #0c8a7a;
     font-size: 16px;
     font-weight: bold;
     margin-top: 15px;
@@ -48,9 +48,7 @@
 
 
 #english-level {
-    color: #0c8a7a;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 14px;
 }
 
 
@@ -168,7 +166,9 @@
 @media (max-width: 768px) {
     .profile-card {
         flex-direction: column;
-        margin-bottom: 20px;
+        margin-bottom: 20;
+        margin-left: 20px;
+        margin-right: 20px;
     }
 
     .profile-container-left {
@@ -203,6 +203,9 @@
     .profile-card {
         margin: 20px auto;
         margin-bottom: 20px;
+        margin-left: 15px;
+        margin-right: 15px;
+        
     }
 
     .profile-container-left,

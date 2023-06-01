@@ -44,7 +44,7 @@
   flex-direction: row;
   padding: 0px;
   min-height: 400px;  
-  background-image: url("/static/img/bg_blur.png");
+  background-image: url("/static/img/background/bg_blur.png");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -132,3 +132,43 @@
   filter: brightness(70%);
 }
 
+
+/* Styles for screens smaller than 768px */
+@media only screen and (max-width: 768px) {
+  main {
+    padding: 30px;
+  }
+
+  .container {
+    max-width: 90%;
+    padding: 10px;
+  }
+
+  .test-container {
+    min-height: 300px;
+  }
+
+  #submit-button {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  #alert-dialog {
+    width: 200px;
+    padding: 8px;
+  }
+
+  #alert-message {
+    font-size: 14px;
+  }
+
+  #alert-ok {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+
+  #alert-cancel {
+    font-size: 10px;
+    padding: 4px 6px;
+  }
+}

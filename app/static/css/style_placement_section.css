@@ -20,6 +20,7 @@ header {
   
 main {
     padding: 25px;
+    margin-left: 15px;
 }
   
 
@@ -59,7 +60,6 @@ main {
   border-left: none;
   padding: auto;
   overflow-y: scroll; /* membuat container discroll */
-  
 }
 
 
@@ -269,9 +269,40 @@ h3 {
 
 
 
+/* Media queries for responsiveness */
 
+/* For screens smaller than 768px */
+@media only screen and (max-width: 768px) {
+  main {
+    margin-left: -27px;
+    margin-right: 27px;
+  }
 
+  .button-container {
+    margin-top: -5px;
+  }
 
-  
-  
+  .question-container {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .answer-container {
+    border: 1px solid #ccc;
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .loader-container {
+    margin-top: -3px;
+    margin-bottom: 8px;
+  }
+
+  .test-container {
+    height: auto;
+    flex-direction: column;
+  }
+
+}
+
   

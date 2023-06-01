@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style_about.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -19,17 +20,18 @@
           </div>
           <div class="row">
             <div class="col-lg-6 about-img">
-              <img src="img/about-img.jpg" alt="">
+              <img src="{{ url_for('static', filename='img/dikti_logo.jpg') }}" alt="Ditjen Diktiristek Logo" style="border-radius: 5%;">
             </div>
   
-            <div class="col-lg-6 content">
-              <h2>Lorem ipsum dolor sit amet, consectetur adipiscing</h2>
-              <h3>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
+            <div id="team-intro" class="col-lg-6 content">
+              <h2>The ChatGPT Team</h2>
+              <h3 id="team-text" style="font-style: normal;">The ChatGPT Team is a group of interns working on the development of artificial intelligence using the GPT model. 
+                This team consists of interns from the MSIB 5 program (Internship and Independent Study Batch 5, 2023) in partnership with Ditjen Diktiristek.</h3>
   
               <ul>
-                <li><i class="ion-android-checkmark-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-                <li><i class="ion-android-checkmark-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-                <li><i class="ion-android-checkmark-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
+                <li><i class="ion-android-checkmark-circle"></i>The team developed an adaptive, interactive, and personalized English learning application called PEL (Personalized English Learning)</li>
+                <li><i class="ion-android-checkmark-circle"></i>The application is free and can be used by everyone</li>
+                <li><i class="ion-android-checkmark-circle"></i>The application utilizes the OpenAI Chat Completion Model API, specifically gpt-3.5-turbo</li>
               </ul>
   
             </div>
@@ -47,57 +49,58 @@
           <div class="section-header">
             <h2>Our Team</h2>
           </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-6">
-              <div class="member">
-                <div class="pic"><img src="img/team-1.jpg" alt=""></div>
-                <div class="details">
-                  <h4>Walter White</h4>
-                  <span>Chief Executive Officer</span>
-                  <div class="social">
-                    <a href=""><i class="fa fa-twitter"></i></a>
-                    <a href=""><i class="fa fa-facebook"></i></a>
-                    <a href=""><i class="fa fa-google-plus"></i></a>
-                    <a href=""><i class="fa fa-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <div class="col-lg-3 col-md-6">
-              <div class="member">
-                <div class="pic"><img src="img/team-2.jpg" alt=""></div>
-                <div class="details">
-                  <h4>Sarah Jhinson</h4>
-                  <span>Product Manager</span>
-                  <div class="social">
-                    <a href=""><i class="fa fa-twitter"></i></a>
-                    <a href=""><i class="fa fa-facebook"></i></a>
-                    <a href=""><i class="fa fa-google-plus"></i></a>
-                    <a href=""><i class="fa fa-linkedin"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
+
+          <div id="row-mentor" class="row justify-content-center">
             <div class="col-lg-3 col-md-6">
               <div class="member">
                 <div class="pic"><img src="img/team-3.jpg" alt=""></div>
                 <div class="details">
-                  <h4>William Anderson</h4>
-                  <span>CTO</span>
+                  <h4>Dr. Eng. Ayu Purwarianti, S.T, M.T.</h4>
+                  <span class="span-role" style="font-style: normal;">Mentor</span>
                   <div class="social">
-                    <a href=""><i class="fa fa-twitter"></i></a>
+                    <!-- <a href=""><i class="fa fa-twitter"></i></a>
                     <a href=""><i class="fa fa-facebook"></i></a>
                     <a href=""><i class="fa fa-google-plus"></i></a>
-                    <a href=""><i class="fa fa-linkedin"></i></a>
+                    <a href=""><i class="fa fa-linkedin"></i></a> -->
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-  
+
+          <div id="row-intern" class="row justify-content-center">
+            <div class="col-lg-3 col-md-6">
+              <div class="member">
+                <div class="pic"><img src="img/team-1.jpg" alt=""></div>
+                <div class="details">
+                  <h4>Muhammad Haerul</h4>
+                  <span class="span-role" style="font-style: normal;">AI Engineer x Web Developer</span>
+                  <div class="social">
+                    <a href=""><i class="fa fa-google-plus"></i></a>
+                    <a href="https://www.linkedin.com/in/muhammad-haerul-71421722a/"><i class="fa fa-linkedin"></i></a>
+                    <a href=""><i class="fa fa-github"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+            <div class="col-lg-3 col-md-6">
+              <div class="member">
+                <div class="pic"><img src="img/team-2.jpg" alt=""></div>
+                <div class="details">
+                  <h4>Mokhammad Irvan Maulana</h4>
+                  <span class="span-role" style="font-style: normal;">Data Annotator X Web Administrator</span>
+                  <div class="social">
+                    <a href=""><i class="fa fa-google-plus"></i></a>
+                    <a href=""><i class="fa fa-linkedin"></i></a>
+                    <a href=""><i class="fa fa-github"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
       </section><!-- #team -->
   

@@ -307,3 +307,27 @@ button[type="submit"]:hover {
 
 
 
+@media only screen and (max-width: 768px) {
+  /* Styles for screens up to 768px */
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  main {
+    padding: 10px;
+  }
+  
+  #chatbot {
+    margin: 10px;
+    /* min-height: 700px; */
+  }
+  
+  .conversation-container {
+    min-height: 400px;
+  }
+  
+  
+  /* Add any other styles specific to smaller screens here */
+}

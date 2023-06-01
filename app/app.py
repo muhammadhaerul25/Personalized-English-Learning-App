@@ -1,14 +1,18 @@
 #MODULES
+import os
 import time
 import threading
 
 #PACKAGES
+import schedule
 from flask import Flask, request
 from flask import render_template, jsonify, redirect, url_for
-import schedule
+from flask_dance.contrib.google import google
+
 
 #FILES
 import prompts as prompt
+from auth import configure_google_oauth, client
 from session import session, pronunciation_dict, context_dict, reading_dict, placement_test_dict, study_plan_dict
 from session import configure_session, configure_sesion_name,create_session, check_session, delete_session, check_prompt_session, recreate_placement_test_prompt_session, recreate_study_plan_prompt_session 
 from models import chatgpt
@@ -24,13 +28,18 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 #FLASK-SESSION
 configure_session(app)
 
+#CONFIGURE GOOGLE OAUTH
+configure_google_oauth(app)
+
+#CONFIGURE HTTPS
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1' #allow http
 
 #ROUTES
 @app.before_request
 def require_login():
-    allowed_routes = ['registration', 'login', 'register','logout', 'static']
+    allowed_routes = ['registration', 'login', 'register', 'logout', 'static', 'google.login', 'register_google', 'login_google']
     if not check_session() and request.endpoint not in allowed_routes:
-        return redirect('/registration')
+        return redirect(url_for('registration'))
     if not check_prompt_session():
         logout()
 
@@ -42,6 +51,8 @@ def home():
 
 @app.route('/profile')
 def profile():
+    if not check_session():
+        return redirect('/registration')
     user = User.get_user(session)
     name = user['name']
     english_level = user['english_level'].replace(' ', '<br>', 1) if user['english_level'] else 'Not Available'
@@ -85,6 +96,8 @@ def register():
     data = request.get_json()
     user = User(name=data.get("name"), email=data.get("email"), password=data.get("password"))
     response, status = user.register()
+    if status == 200:
+        return redirect(url_for("login"))
     return jsonify(response), status
 
 @app.route("/login", methods=["POST"])
@@ -96,6 +109,41 @@ def login():
         create_session(existing_user)
         configure_sesion_name(app, existing_user['_id'])
     return jsonify(response), status
+
+
+@app.route("/register-google")
+def register_google():
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    resp = google.get("/oauth2/v2/userinfo")
+    if resp.ok:
+        user_info = resp.json()
+        email = user_info["email"]
+        name = user_info["name"]
+        phone = user_info.get("phone")
+        user = User(name=name, email=email, phone=phone)
+        response, status = user.register()
+        return redirect(url_for("login_google"))
+    else:
+        return "Registration failed"
+    
+@app.route("/login-google")
+def login_google():
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    resp = google.get("/oauth2/v2/userinfo")
+    if resp.ok:
+        user_info = resp.json()
+        email = user_info["email"]
+        user = User(email=email)
+        existing_user, response, status = user.login_with_google()
+        if status == 200:
+            create_session(existing_user)
+            configure_sesion_name(app, existing_user['_id'])
+            return render_template('home.html')
+        else:
+            return "Login failed. Email not found or register first"
+
 
 @app.route('/logout')
 def logout():

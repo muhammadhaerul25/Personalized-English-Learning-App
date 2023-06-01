@@ -1,5 +1,5 @@
 import time
-
+import bcrypt
 from pymongo import MongoClient, ASCENDING
  
 from session import update_tokens_session
@@ -24,22 +24,30 @@ class User:
         self.english_level = english_level
         self.tokens_had = tokens_had
         self.tokens_used = tokens_used
- 
-
+    
     def is_email_registered(self):
         return users.find_one({"email": self.email}) is not None
     
+    def hash_password(self, password):
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+        return hashed_password.decode('utf-8')
+    
+    def verify_password(self, password, hashed_password):
+        return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
+    
     def insert(self):
+        hashed_password = self.hash_password(self.password)
         users.insert_one({
             "name": self.name,
             "email": self.email,
             "phone": self.phone,
-            "password": self.password,
+            "password": hashed_password,
             "english_level": self.english_level,
-            'tokens_had': self.tokens_had,
-            'tokens_used': self.tokens_used,
-            'timestamp': int(time.time()),
-            'joined_date': time.strftime("%d/%m/%Y")
+            "tokens_had": self.tokens_had,
+            "tokens_used": self.tokens_used,
+            "timestamp": int(time.time()),
+            "joined_date": time.strftime("%d/%m/%Y")
         })
 
     def register(self):
@@ -52,8 +60,14 @@ class User:
         existing_user = users.find_one({"email": self.email})
         if not existing_user:
             return existing_user, {"message": "Email not found"}, 404
-        if existing_user["password"] != self.password:
+        if not self.verify_password(self.password, existing_user["password"]):
             return existing_user, {"message": "Invalid email or password"}, 401
+        return existing_user, {"message": "Login successful"}, 200
+    
+    def login_with_google(self):
+        existing_user = users.find_one({"email": self.email})
+        if not existing_user:
+            return existing_user, {"message": "Email not found"}, 404
         return existing_user, {"message": "Login successful"}, 200
     
     #GETTERS
@@ -91,6 +105,9 @@ class User:
         if user_data:
             return user_data.get("tokens_had")
         return 0
+    
+    def get_user_by_email(email):
+        return users.find_one({"email": email})
     
 
     #UPDATERS

@@ -1,0 +1,10 @@
+#contact-link {
+    color: #0c8a7a;
+}
+
+#contactForm input[type="text"],
+#contactForm input[type="email"],
+#contactForm textarea,
+#contactForm button[type="submit"] {
+  border-radius: 5px;
+}

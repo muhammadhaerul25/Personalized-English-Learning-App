@@ -268,63 +268,79 @@ input:focus {
     background-color: #b4cdc6;
   }
 
+  .switch-button {
+	display: none;
+  }
 
+  .overlay-mobile {
+	display: none;
+  }
 
 
   @media (max-width: 768px) {
 	.container {
 	  flex-direction: column;
 	  height: auto;
+	  min-height: 0;
+	  padding-top: 20px;
+	  padding-left: 0px;
+	  padding-right: 0px;
+	  padding-bottom: 20px;
 	}
   
 	.form-container {
-	  margin-top: 30px;
-	  margin-bottom: 30px;
-	  width: 100%;
-	  height: auto;
 	  position: static;
-	  opacity: 1;
-	  z-index: 5;
-	  transform: none;
-	  transition: none;
+	  height: auto;
+	}
+  
+	.sign-in-container,
+	.sign-up-container {
+	  width: 100%;
+	  transition: opacity 0.3s ease;
 	}
   
 	.sign-up-container {
-	  padding-top: 0;
+		display: none;
+		padding-top: 0;
+		opacity: 1;
+		z-index: 5;
+		animation: none;
+	}
+
+	.sign-in-container {
+		display: block;
+		padding-top: 0;
+		opacity: 1;
+		z-index: 5;
+		animation: none;
 	}
   
 	.overlay-container {
-	  display: flex;
-	  align-items: center;
-	  justify-content: space-between;
-	  width: 100%;
-	  height: auto;
-	  position: static;
-	  opacity: 1;
-	  z-index: 5;
-	  transform: none;
-	  transition: none;
+	  display: none;
 	}
-  
-	.overlay-panel {
-	  width: 100%;
-	  transform: none;
-	  transition: none;
+
+	.overlay-mobile {
+		display: block;
+		margin: 10px;
+		margin-top: 5px;
+		margin-bottom: 15px;
+		font-size: 20px;
 	}
-  
-	.overlay {
-	  transform: translateX(0) !important;
+	
+	.overlay-mobile h1 {
+		font-weight: bold;
+		text-align: center;
+		color: #74AA9C;
 	}
-  
-	.container.right-panel-active .overlay {
-	  transform: translateX(100%) !important;
+
+	.switch-button {
+	 color: #74AA9C;
+	  display: block;
+	  margin: 10px auto;
+	  width: fit-content;
+	  background-color: transparent;
 	}
   }
-  
-
-  
-
-  
   
   
 

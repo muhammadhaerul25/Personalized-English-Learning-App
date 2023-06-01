@@ -4,7 +4,8 @@
     <title>Learning</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/exit_button.css') }}">
+    
+    {% include 'favicon.html' %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_learning.css') }}">
   </head>
   
@@ -47,14 +48,7 @@
           </form>
           
           
-          <button id="exit-button" class="exit-button">Exit</button>
-          <div id="alert-exit-dialog" class="hide">
-            <div id="alert-exit-message">Are you sure you want to exit?</div>
-            <div id="alert-exit-buttons">
-              <button id="alert-exit-ok">Yes</button>
-              <button id="alert-exit-cancel">Cancel</button>
-            </div>
-          </div>
+          {% include 'exit_button.html' %}
           
         </div>
       </div>
@@ -62,7 +56,6 @@
     
 
     <script type="module" src="{{ url_for('static', filename='js/script_learning.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/exit_button.js') }}"></script>
   
   </body>
 </html>

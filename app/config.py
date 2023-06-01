@@ -1,4 +1,8 @@
-API_KEY = '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'
+OPENAI_API_KEY = 'sk-'
+
+GOOGLE_API_KEY = ""
+GOOGLE_CLIENT_ID = "644921762385-7mht08oouifcgp3cha7v6m0d6r9ls2qd.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
 
 MODEL = 'gpt-3.5-turbo'
 

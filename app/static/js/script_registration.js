@@ -127,15 +127,41 @@ formLogin.addEventListener("submit", (event) => {
 });
 
 
-const switchLoginButton = document.getElementById('switch-login');
-const switchRegisterButton = document.getElementById('switch-register');
-const signInContainer = document.querySelector('.sign-in-container');
+
+// Switch Button Functionality
+const switchLoginBtn = document.getElementById('switch-login-btn-mobile');
+const switchRegisterBtn = document.getElementById('switch-register-btn-mobile');
 const signUpContainer = document.querySelector('.sign-up-container');
+const signInContainer = document.querySelector('.sign-in-container');
 
-switchLoginButton.addEventListener('click', () => {
-  container.classList.remove('right-panel-active');
+switchLoginBtn.addEventListener('click', () => {
+  signUpContainer.style.display = 'none';
+  signInContainer.style.display = 'block';
 });
 
-switchRegisterButton.addEventListener('click', () => {
-  container.classList.add('right-panel-active');
+switchRegisterBtn.addEventListener('click', () => {
+  signInContainer.style.display = 'none';
+  signUpContainer.style.display = 'block';
 });
+
+
+
+//RESIZE EVENT
+// Store the initial screen width
+localStorage.setItem('previousWidth', window.innerWidth);
+
+// RESIZE EVENT
+window.addEventListener('resize', function() {
+  const currentWidth = window.innerWidth;
+  const previousWidth = parseInt(localStorage.getItem('previousWidth'));
+
+  if ((previousWidth >= 768 && currentWidth < 768) || (previousWidth < 768 && currentWidth >= 768)) {
+    // Screen size changed between smaller than 768 and larger than or equal to 768
+    location.reload();
+  }
+
+  // Update the stored screen width
+  localStorage.setItem('previousWidth', currentWidth);
+});
+
+
