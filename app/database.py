@@ -37,7 +37,8 @@ class User:
         return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
     
     def insert(self):
-        hashed_password = self.hash_password(self.password)
+        if self.password is not None:
+            hashed_password = self.hash_password(self.password)
         users.insert_one({
             "name": self.name,
             "email": self.email,

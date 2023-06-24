@@ -9,7 +9,6 @@ from flask import Flask, request
 from flask import render_template, jsonify, redirect, url_for
 from flask_dance.contrib.google import google
 
-
 #FILES
 import prompts as prompt
 from auth import configure_google_oauth, client
@@ -96,8 +95,6 @@ def register():
     data = request.get_json()
     user = User(name=data.get("name"), email=data.get("email"), password=data.get("password"))
     response, status = user.register()
-    if status == 200:
-        return redirect(url_for("login"))
     return jsonify(response), status
 
 @app.route("/login", methods=["POST"])
@@ -123,9 +120,12 @@ def register_google():
         phone = user_info.get("phone")
         user = User(name=name, email=email, phone=phone)
         response, status = user.register()
-        return redirect(url_for("login_google"))
+        if status == 200:
+            create_session(response)
+            configure_sesion_name(app, response['_id'])
+            return render_template('home.html')
     else:
-        return "Registration failed"
+        return "Registration failed. Please try again."
     
 @app.route("/login-google")
 def login_google():
@@ -142,7 +142,7 @@ def login_google():
             configure_sesion_name(app, existing_user['_id'])
             return render_template('home.html')
         else:
-            return "Login failed. Email not found or register first"
+            return "Login failed. Please register first."
 
 
 @app.route('/logout')
