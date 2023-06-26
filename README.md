@@ -2,7 +2,7 @@
 
 Personalized English Learning is a web-based English language learning application that utilizes AI models to interact with users. The application is designed to be interactive, adaptive, and personalizing the English learning process according to the user's abilities.
 
-![Demo App](Demo%20-%20PEL%20App%20Dikti.mp4)
+[![Demo Video](https://drive.google.com/uc?export=download&id=15r8nBDNjFY7SX_uFCQVCGUMRQfnOtB28)](https://drive.google.com/file/d/15r8nBDNjFY7SX_uFCQVCGUMRQfnOtB28/view)
 
 ## Features
 
