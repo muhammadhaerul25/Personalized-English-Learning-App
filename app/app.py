@@ -76,6 +76,10 @@ def profile():
                            study_plan_date=study_plan_date, study_plan=study_plan)
 
 
+@app.route('/how-to-use')
+def how_to_use():
+    return render_template('how_to_use.html')
+
 @app.route('/about')
 def about():
     return render_template('about.html')
